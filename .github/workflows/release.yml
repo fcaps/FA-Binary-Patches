@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release Version'
+        required: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+
+      - name: Install MinGW
+        run: |
+          pacman --noconfirm -S mingw-w64-i686-gcc
+
+      - uses: actions/checkout@v2
+
+      - name: Download Patcher
+        run: curl -L "https://github.com/FAForever/FA_Patcher/releases/latest/download/FaP.exe" -o FaP.exe
+
+      - name: Download Baseline
+        run: curl -L "https://content.faforever.com/build/ForgedAlliance_base.exe" -o ForgedAlliance_base.exe
+
+      - name: Patch Binary
+        run: ./FaP.exe
+
+      - name: Create Draft Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          release_name: v${{ github.event.inputs.version }}
+          draft: true
+          prerelease: true
