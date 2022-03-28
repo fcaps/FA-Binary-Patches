@@ -36,7 +36,9 @@ jobs:
         run: curl -L "https://content.faforever.com/build/ForgedAlliance_base.exe" -o ForgedAlliance_base.exe
 
       - name: Patch Binary
-        run: ./FaP.exe
+        run: |
+          echo '#define gitsha "'${GITHUB_SHA::7}'"' > workflow.cpp
+          ./FaP.exe
 
       - name: Post file
         run: curl -f -X "POST"

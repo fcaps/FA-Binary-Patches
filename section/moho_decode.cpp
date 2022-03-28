@@ -1,3 +1,4 @@
+#include "../workflow.cpp"
 #include "include/funcDefs.h"
 #include "include/global_func_table.h"
 
@@ -100,7 +101,7 @@ __attribute__((noinline)) void timed_out()
 
 __attribute__((noinline)) void p_Version()
 {
-	((int (*)(const char* fmt, ...))_Logf)("Exe Version: 1.0\n");
+	((int (*)(const char* fmt, ...))_Logf)("Exe GitSHA: %s\n", gitsha);
 	return;
 }
 

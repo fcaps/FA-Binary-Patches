@@ -1,0 +1,1 @@
+#define gitsha "This could be your ad."
