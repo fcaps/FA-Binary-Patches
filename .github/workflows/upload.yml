@@ -43,5 +43,5 @@ jobs:
 
       - name: Post file
         run: curl -f -X "POST"
-          "https://api.faforever.com/exe/upload?modName=${{ github.event.inputs.modName }}&apiKey=${{ secrets.apiKey }}"
+          "https://api.faforever.com/exe/upload" -F "modName=${{ github.event.inputs.modName }}" -F "apiKey=${{ secrets.apiKey }}"
           -F "file=@ForgedAlliance_exxt.exe"
