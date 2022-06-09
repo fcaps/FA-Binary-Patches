@@ -10,6 +10,9 @@ This are just the patch files for this game. I decided to separate them from pat
 
 # Change List
 ## Fixes
+- Zeroing GuardScanRadius if the unit's order is not Patrol/AttackMove. Increases performance.
+    - hooks/HGuardFix.cpp
+    - section/GuardFix.cpp
 - Prevents the crash with 'None' collisions of air. #3235
     - hooks/AirNoneCollisionFix.cpp
 - Prevents commander exploding for no reason. #3406
