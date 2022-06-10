@@ -86,6 +86,18 @@ CreateTable
   PushStack
 LuaObjectFinalize
 
+//Lua internals. For debug only.
+
+00457880 luaplus_assert
+009274D0 luaH_getstr
+0091A240 luaM_realloc
+00927610 luaH_index
+00914E90 luaF_newCclosure(lua_State*, int numArgs)
+00913990 luaD_growstack(lua_State*, numArgs)
+00915D90 luaC_collectgarbage
+009248E0 CreateHashStr
+009142A0 CallCFunctionFromLua
+
 // Other
 
 00937C30 SpewF(char* str, args...)
@@ -95,7 +107,7 @@ LuaObjectFinalize
 
 00938E00 Format
 00938F10 Format+1
-00A89950 RaiseException+1
+00A89950 _CxxThrowException
 
 00958B20 AllocMemory(Size):eax
 00957A70 AllocMemory+1
@@ -106,6 +118,12 @@ LuaObjectFinalize
 00957A60 FreeMemory+2
 00A82542 FreeMemory+3
 
+00459D10 OpenFile
+008E0750 LookupRType
+004CCE70 CScrLuaObjectFactory::Get
+004D26D0 Moho::SCR_Copy //Copy lua object
+00529F70 RRuleGameRulesImpl::ExportToLuaState
+004CE020 DoFile(LuaObject* ecx, char* file, Table* env):al bool
 00908A70 GetVar(out LuaObject* ecx, LuaState**):eax LuaObject
 009132F0 lua_getinfo
 00AA549E StrCmp(char* str1, char* str2)
@@ -118,7 +136,7 @@ LuaObjectFinalize
 00408450 CompareStrings(char* str1, char* str2, strLen1):eax -1,0,1
 0040A880 CompareStrings2(char* str1, strLen1, char* str2, strLen2):eax
 0041CC90 SimConExecute
-004CD3A0 Register LUA function
+004CD3A0 Register LUA CFunction
 00528460 RRuleGameRulesAlloc(Arg1,Arg2)
 00529120 RRuleGameRulesInit(Arg1,Arg2,Arg3)
 00529510 DestroyRRuleGameRules
@@ -185,7 +203,7 @@ LuaObjectFinalize
 0084C9C0 InitCUIManager
 00408940 CreateEngineStats
 004088C0 InitEngineStats(EngineStats*)
-0040C200 CreateEngineStatsItem(EngineStats* ecx, char* pathAndName, int value):eax
+0040C200 GetEngineStatsItem(EngineStats* ecx, char* pathAndName, int value):eax
 0040A0A0 CreateStatItemRoot(EngineStats*):eax
 00408730 InitStatItem(StatItem*, char* name):eax
 008E5050 CalcHash

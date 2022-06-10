@@ -37,11 +37,11 @@ struct string
 };
 
 struct vector
-{
-	char pad[4];
-	void** objects_begin;
-	void** objects_end;
-	void** objects_capacity_end;
+{	// 0x10 bytes
+	void* pad;
+	void* objects_begin;
+	void* objects_end;
+	void* objects_capacity_end;
 
 #ifdef CXX_BUILD
 	void* operator[](int index)
@@ -58,10 +58,10 @@ struct vector
 #endif
 };
 
-struct list // probably not from visual c++, but made by gpg
-// considering, it's not capacity based, probably made by gpg
+// probably not from visual c++ 9, but made by gpg
+struct list
 {       // 0x0C bytes
-	void* objects_start; // 0 if empty
+	void* objects_begin; // 0 if empty
 	void* objects_end;
 	void* objects_capacity_end;
 };
@@ -94,8 +94,9 @@ struct CScriptObject // : RObject
 };
 
 struct WeakObject
-{
+{	// 0x8 bytes ?
 	void* vtable;
+	void* Unk1;
 };
 
 struct gpg_mutex
@@ -325,8 +326,19 @@ struct RMeshBlueprint // : RBlueprint
 
 struct REntityBlueprint // : RBlueprint
 {	// ~0x17C bytes
-	// at 0x64
-	list Categories; // <string>
+	// at 0x60
+	vector Categories; //vector<string>
+
+	// at 0xD8
+	struct SFootprint {
+		char SizeX;
+		char SizeZ;
+		char OccupancyCaps;
+		char Flags;
+		float MaxSlope;
+		float MinWaterDepth;
+		float Unk1;
+	} Footprint, AltFootprint;
 };
 
 struct RPropBlueprint // : REntityBlueprint
@@ -339,15 +351,68 @@ struct RProjectileBlueprint // : REntityBlueprint
 
 struct RUnitBlueprint // : REntityBlueprint
 {	// 0x568 bytes
-	// at 0x400
-	int T2ClassSize;
-	int T3ClassSize;
-	int GenericClassSize;
-	int SClassSize;
-	// at 0x43C
-	string ArmorType;
-	// at 0x564
-	float MaxBuildDistance;
+	// at 0x17C
+	struct RUnitBlueprintGeneral {
+	} General;
+
+	// at 0x200
+	struct RUnitBlueprintDisplay {
+	} Display;
+
+	// at 0x278
+	struct RUnitBlueprintPhysics {
+	} Physics;
+
+	// at 0x330
+	struct RUnitBlueprintIntel {
+	} Intel;
+
+	// at 0x368
+	struct RUnitBlueprintAir {
+	} Air;
+
+	// at 0x3F8
+	struct RUnitBlueprintTransport {
+		// at 0x400
+		int T2ClassSize;
+		int T3ClassSize;
+		int GenericClassSize;
+		int SClassSize;
+	} Transport;
+
+	// at 0x420
+	struct RUnitBlueprintDefense {
+		// at 0x43C
+		string ArmorType;
+	} Defense;
+
+	// at 0x460
+	struct RUnitBlueprintAI {
+		float GuardScanRadius;
+		float GuardReturnRadius;
+		float StagingPlatformScanRadius;
+		bool ShowAssistRangeOnSelect;
+		string GuardFormationName;
+		bool NeedUnpack;
+		bool InitialAutoMode;
+		string BeaconName;
+		vector TargetBones; //vector<string>
+		float RefuelingMultiplier;
+		float RefuelingRepairAmount;
+		float RepairConsumeEnergy;
+		float RepairConsumeMass;
+		bool AutoSurfaceToAttack;
+		float AttackAngle;
+	} AI;
+
+	// at 0x4D8
+	vector Weapon; //vector<RUnitBlueprintWeapon>
+
+	// at 0x4E8
+	struct RUnitBlueprintEconomy {
+		// at 0x564
+		float MaxBuildDistance;
+	} Economy;
 };
 
 struct CUIManager // : IUIManager
@@ -610,22 +675,91 @@ struct Prop // : Entity
 	RPropBlueprint* Blueprint;
 };
 
-struct Unit // : Entity
+struct CUnitCommand
+{	// 0x178 bytes
+	void* vtable;
+	void* Unk1;
+	void* Unk2;
+	LuaObject UserData;
+	LuaObject Table;
+	// at 0x4C
+	float Unk3;
+	// at 0x5C
+	float Unk4;
+	// at 0x60
+	RUnitBlueprint* Build;
+	string Unk5;
+	// at 0x98
+	uint Order;
+	// at 0xA4
+	Vector4f Pos1;
+	// at 0x128
+	Vector3f Pos2;
+	// at 0x160
+	LuaObject Nil;
+	void* Unk6;
+};
+
+struct SCommand
+{	// 0x8 bytes
+	void* CUnitCommand; //+0x4
+	void* Nil;
+};
+
+struct Unit;
+struct CommandQueue
+{	// 0x28 bytes
+	void* Unk1;
+	void* Unk2;
+	Unit* Owner;
+	vector Commands; //vector<SCommand>
+	void* Unk3;
+	void* Unk4;
+	bool Unk5;
+};
+
+struct Unit // : WeakObject
 {	// 0x6A8 bytes
+	// at 0x8
+	//Entity Entity; to 0x278
 	// at 0x50
 	void* self1;
 	// at 0x70
 	int UnitID;
 	RUnitBlueprint* Blueprint;
-	// at 0x98
+	uint CreationIndex; //?
+	void* Unk1;
+	void* Unk2;
+	void* RScmResource;
+	void* RMeshBlueprint;
+	Vector3f Scale; // at 0x8C
 	float CurHealth;
 	float MaxHealth;
-	// at 0xA4
-	Vector4f Rot1;
+	bool Unk3;
+	bool Unk4;
+	bool Unk5;
+	char pad1;
+	Vector4f Rot1; // at 0xA4
 	Vector3f Pos1;
 	Vector4f Rot2;
 	Vector4f Pos2;
-	float FractionComplete;
+	float FractionComplete; // at 0xE0
+	void* Unk7;
+	char Unk8[0x18];
+	void* Unk10;
+	void* Unk12;
+	void* Unk13;
+	void* Unk14;
+	void* Unk15;
+	void* Unk16;
+	bool Unk17;
+	char pad2[3];
+	void* Unk18;
+	void* Unk19;
+	bool Unk20;
+	char pad3[3];
+	void* Unk21;
+	void* Unk22; // at 0x130
 	// at 0x154
 	SimArmy* Owner;
 	Vector4f Rot3;
@@ -643,6 +777,7 @@ struct Unit // : Entity
 	float WorkProgress;
 	// at 0x4B0
 	void* MotionEngine; // +0xC FuelUseTime
+	void* CommandQueue;
 	// at 0x534
 	void* WorkValues; //+0x8
 	bool Flag;
