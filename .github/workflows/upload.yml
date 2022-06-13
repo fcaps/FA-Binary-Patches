@@ -53,6 +53,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commit: ${{ github.sha }}
-          name: ${{ github.event.inputs.modName }}_${{ github.sha }}
+          tag: ${{ github.event.inputs.modName }}_${{ github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
