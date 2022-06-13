@@ -29,8 +29,6 @@ jobs:
           pacman --noconfirm -S mingw-w64-i686-gcc
 
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Download Patcher
         run: curl -L "https://github.com/FAForever/FA_Patcher/releases/latest/download/FaP.exe" -o FaP.exe
@@ -48,32 +46,6 @@ jobs:
           "https://api.faforever.com/exe/upload" -F "modName=${{ github.event.inputs.modName }}" -F "apiKey=${{ secrets.apiKey }}"
           -F "file=@ForgedAlliance_exxt.exe"
 
-      - name: Get Latest Tag
-        id: latest_tag
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-          repository: ${{ github.repository }}
-          excludes: prerelease, draft
-
-      - name: Set Tag
-        id: set_tag
-        run: |
-          baseTag=$(date +v%y.%-m.%-d)
-          tag=${{ github.event.inputs.modName }}_$baseTag
-          count=1
-        
-          while [ $(git tag -l "$tag") ]; 
-          do 
-            tag=$baseTag.$count; 
-            count=$(($count+1)); 
-          done
-          echo ::set-output name=tag::$tag
-
-      - name: Get Body
-        id: get_body
-        run: |
-          git log --pretty=format:"* %s" ${{ steps.latest_tag.outputs.release }}..HEAD > body.md 
-
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1
@@ -81,9 +53,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commit: ${{ github.sha }}
-          tag: ${{ steps.set_tag.outputs.tag }}
-          name: ${{ steps.set_tag.outputs.tag }}
-          draft: 
+          name: ${{ github.event.inputs.modName }}_${{ github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          bodyFile: body.md
           generateReleaseNotes: true
