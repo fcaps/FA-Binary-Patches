@@ -45,6 +45,9 @@ This are just the patch files for this game. I decided to separate them from pat
     - hooks/WayPointArrive.cpp
 
 ## Additions
+- GetSessionClients also output maximum sim speed(maxSP)
+    - hooks/HOutputMaxSP.cpp
+    - section/OutputMaxSP.cpp
 - Console command: "cam_DefaultMiniLOD 0" now completely disable mesh renderer for minimap
     - hooks/MinimapMesh.cpp
     - section/MinimapMesh.cpp
