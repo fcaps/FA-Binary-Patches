@@ -3,7 +3,7 @@
 GetClassNamePtr -> [[[Self]-4]+C]+8
 GetParentClassNamePtr -> [[[[Self]-4]+24+1*4]]+8
 
-TrueClassOffset -> -[[[Self]-4]+4]
+TrueDataOffset -> -[[[Self]-4]+4]
 ClassAncestors -> [[Self]-4]+24
 
 Get debugging info about a Lua call:
@@ -27,10 +27,7 @@ const int g_EntityCategoryTypeInfo = 0x10C6E70;
 const int g_CAiBrainTypeInfo = 0x10C6FA0;
 const int g_CUIManager = 0x10A6450;
 const int g_EngineStats = 0x10A67B8;
-
-const int g_ExeVersion1 = 0x00876666;
-const int g_ExeVersion2 = 0x0087612d;
-const int g_ExeVersion3 = 0x004d3d40;
+const int g_WRenViewport = 0x10C7C28;
 
 const int ui_SelectTolerance = 0x0F57A90;
 const int ui_ExtractSnapTolerance = 0x0F57A94;
@@ -50,6 +47,10 @@ const int s_global = 0xE00D90; // "<global>"
 const char d3d_WindowsCursor = 0x010A636E;
 
 // Int const
+
+const int g_ExeVersion1 = 0x00876666;
+const int g_ExeVersion2 = 0x0087612d;
+const int g_ExeVersion3 = 0x004d3d40;
 
 const int ui_ProgressBarColor = 0x00F57BB8;
 
@@ -256,6 +257,10 @@ LuaObjectFinalize
 00532380 CreateRProjectileBlueprint
 0051B740 InitRProjectileBlueprint
 005289D0 RegisterBlueprint(RRuleGameRules*, char* Category)
+007FA230 CreateWRenViewport
+007F66A0 InitWRenViewport
+007EDFE0 GenerateRingCylinders
+007EF5A0 RenderRings
 00577890 InitSTIMap
 005790E0 CreateCHeightField
 0044FB90 GetTerrainHeight(float x, float z):int ecx

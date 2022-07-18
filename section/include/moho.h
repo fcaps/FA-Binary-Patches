@@ -18,6 +18,35 @@ struct luaFuncDescReg
 	void* ClassPtr;       // C++ class type address. NULL if class none
 };
 
+struct vtable;
+struct typeInfo
+{	// 0x8 bytes
+	void* vtable;
+	int zero;
+	char* name;
+};
+
+struct classDesc
+{	// 0x30+ bytes
+	// at 0x4
+	uint trueDataOffset; // subtraction
+	// at 0xC
+	void* typeInfo;
+	// at 0x20
+	void* beginParents; // +0x4
+	void* endParents; // -0x4
+	// at 0x28
+	classDesc* parents[];
+	//void* typeInfo;
+};
+
+struct vtable
+{	// 0x8+ bytes
+	// at -0x4
+	void* classDesc;
+	void* methods[];
+};
+
 struct string
 {       // 0x1c bytes
 	void* ptr1;
@@ -1189,3 +1218,64 @@ struct CNetUDPConnetor // : INetConnector
 	7 - Restart Requested
 	8 - Session Halted
 */
+
+struct MapImager
+{	// 0x14 bytes
+	void* vtable;
+};
+
+struct MeshThumbnailRenderer
+{	// 0x3C bytes
+	void* vtable;
+};
+
+struct RangeRenderer
+{	// 0x94 bytes
+	void* vtable;
+};
+
+struct VisionRenderer
+{	// 0x78 bytes
+	void* vtable;
+};
+
+struct BoundaryRenderer
+{	// 0x68 bytes
+	void* vtable;
+};
+
+struct Shadow
+{	// 0x318 bytes
+	void* vtable;
+};
+
+struct Clutter
+{	// 0x192C bytes
+	void* vtable;
+};
+
+struct Silhouette
+{	// 0x74? bytes
+	void* vtable;
+};
+
+struct WRenViewport // : WD3DViewport
+{	// 0x21A8 bytes
+	void* vtable;
+	// at 0x32C
+	MapImager mapImager;
+	// at 0x340
+	MeshThumbnailRenderer meshThumbnailRenderer;
+	// at 0x37C
+	RangeRenderer rangeRenderer;
+	// at 0x410
+	VisionRenderer visionRenderer;
+	// at 0x488
+	BoundaryRenderer boundaryRenderer;
+	// at 0x4F0
+	Shadow shadow;
+	// at 0x808
+	Clutter clutter;
+	// at 0x2134
+	Silhouette silhouette;
+};
