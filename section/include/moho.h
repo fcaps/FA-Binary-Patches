@@ -8,7 +8,7 @@ typedef unsigned int bool32;
 typedef unsigned short uint16;
 
 struct luaFuncDescReg
-{
+{	// 0x1C bytes
 	void** RegisterFunc;  // call for register lua function
 	char* FuncName;       // lua name function
 	char* ClassName;      // lua class name. <global> if class none
@@ -20,10 +20,10 @@ struct luaFuncDescReg
 
 struct vtable;
 struct typeInfo
-{	// 0x8 bytes
+{	// 0x8+ bytes
 	void* vtable;
 	int zero;
-	char* name;
+	char name[];
 };
 
 struct classDesc

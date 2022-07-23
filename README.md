@@ -17,6 +17,9 @@ This are just the patch files for this game. I decided to separate them from pat
     - hooks/AirNoneCollisionFix.cpp
 - Prevents commander exploding for no reason. #3406
     - hooks/NegativeIncomeFix.cpp
+- Range ring performance improvement (reducing height cylinders)
+    - hooks/HRangeRings2.cpp
+    - section/RangeRings2.cpp
 - Range ring performance improvement (don't render each ring twice)
     - hooks/RangeRings.cpp
     - section/RangeRings.cpp
@@ -45,6 +48,9 @@ This are just the patch files for this game. I decided to separate them from pat
     - hooks/WayPointArrive.cpp
 
 ## Additions
+- Allowing customize colors for team color mode
+    - hooks/TeamColorMode.cpp
+    - section/TeamColorMode.cpp
 - GetSessionClients also output maximum sim speed(maxSP)
     - hooks/HOutputMaxSP.cpp
     - section/OutputMaxSP.cpp

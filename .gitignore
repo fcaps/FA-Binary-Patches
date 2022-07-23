@@ -1,0 +1,4 @@
+*.exe
+/build
+define.h
+patch.ld

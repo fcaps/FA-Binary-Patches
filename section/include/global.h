@@ -105,6 +105,7 @@ LuaObjectFinalize
 00937CB0 LogF(char* str, args...)
 00937D30 WarningF(char* str, args...)
 0041C990 ConsoleLogF(char* str, args...)
+00A9B4E6 FileWrite(int fileIndex, const char* str, int strlen) index 3 is log.
 
 00938E00 Format
 00938F10 Format+1
@@ -182,7 +183,8 @@ LuaObjectFinalize
 0053E590 SetSimRate
 0053E720 GetSimRate
 0053E7E0 GetSimRateRequested
-007EF9B0 RenderRing
+007EF9B0 DrawRings
+0081C660 DrawVision
 008F3C40 D3DXEffect::GetPassCount ?
 008F4080 D3DXEffect::BeginPass ?
 008F4260 D3DXEffect::EndPass ?
@@ -261,6 +263,8 @@ LuaObjectFinalize
 007F66A0 InitWRenViewport
 007EDFE0 GenerateRingCylinders
 007EF5A0 RenderRings
+005779C0 CreateMapData
+004783D0 CreateTerrainHeights
 00577890 InitSTIMap
 005790E0 CreateCHeightField
 0044FB90 GetTerrainHeight(float x, float z):int ecx
