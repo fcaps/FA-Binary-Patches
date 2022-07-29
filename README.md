@@ -31,6 +31,7 @@ This are just the patch files for this game. I decided to separate them from pat
     - section/gpg_net.cpp
     - section/moho_decode.cpp
     - section/moho_input.cpp
+    - section/include/desync_fix_global.h
 - Kill exception during map loading
     - hooks/Kill_maploader_except.cpp
 - Make xact3d the error message print once

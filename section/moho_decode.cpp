@@ -1,13 +1,12 @@
 #include "../workflow.cpp"
-#include "include/funcDefs.h"
-#include "include/global_func_table.h"
+#include "include/desync_fix_global.h"
 
 const char* safe_quit = "safeQuit";
-_DWORD tick_num = 0;
+uint32_t tick_num = 0;
 static bool update_pl_count = true;
-_DWORD terminated = 0;
-_DWORD num_clients = 0;
-_DWORD current_num_clients = 0;
+uint32_t terminated = 0;
+uint32_t num_clients = 0;
+uint32_t current_num_clients = 0;
 bool paused = false;
 
 int strCmp(const char* s1, const char* s2)

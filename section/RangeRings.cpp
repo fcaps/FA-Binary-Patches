@@ -1,5 +1,4 @@
-#include "include/funcDefs.h"
-#include "include/global_func_table.h"
+#include "include/desync_fix_global.h"
 
 void GlobalRings()
 {

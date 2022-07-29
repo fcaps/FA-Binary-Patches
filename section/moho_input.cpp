@@ -1,9 +1,8 @@
-#include "include/funcDefs.h"
-#include "include/global_func_table.h"
+#include "include/desync_fix_global.h"
 
-_DWORD input_tick = 0;
-_DWORD prev_tick = 0;
-_DWORD init_tick = 0;
+uint32_t input_tick = 0;
+uint32_t prev_tick = 0;
+uint32_t init_tick = 0;
 
 void MOHO_USER_INPUT()
 {

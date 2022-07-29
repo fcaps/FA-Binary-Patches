@@ -1,13 +1,12 @@
-#include "include/funcDefs.h"
-#include "include/global_func_table.h"
+#include "include/desync_fix_global.h"
 
 //FUNCTIONS with NAMES ARE WINAPI FOR THIS FILE. FOR EXAMPLE recvfrom
 
-_DWORD tag_sent = 0;
-_DWORD p_index = 0;
-_DWORD sender_sock = 1;
-_DWORD sync_buffer[17];
-_DWORD discard = 0;
+uint32_t tag_sent = 0;
+uint32_t p_index = 0;
+uint32_t sender_sock = 1;
+uint32_t sync_buffer[17];
+uint32_t discard = 0;
 
 __attribute__((noinline)) void p_SetEvent()
 {
