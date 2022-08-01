@@ -10,13 +10,13 @@ uint32_t discard = 0;
 
 __attribute__((noinline)) void p_SetEvent()
 {
-	((int (*)(const char* fmt, ...))_Logf)("Callback packet received, exit sync is over\n");
+	LogF("Callback packet received, exit sync is over\n");
 	return;
 }
 
 __attribute__((noinline)) void p_Tag()
 {
-	((int (*)(const char* fmt, ...))_Logf)("Tag packet sent\n");
+	LogF("Tag packet sent\n");
 	return;
 }
 
@@ -28,7 +28,7 @@ __attribute__((noinline)) void CheckClients()
 	{
 		if (sync_buffer[i] == eax)
 		{
-			((int (*)(const char* fmt, ...))_Logf)("Discarded: %p\n", eax);
+			LogF("Discarded: %p\n", eax);
 			discard = 1;
 			break;
 		}
@@ -39,14 +39,14 @@ __attribute__((noinline)) void CheckClients()
 __attribute__((noinline)) void p_rptr()
 {
 	register int eax asm("eax");
-	((int (*)(const char* fmt, ...))_Logf)("recv Ptr: %p\n", eax);
+	LogF("recv Ptr: %p\n", eax);
 	return;
 }
 
 __attribute__((noinline)) void p_sptr()
 {
 	register int eax asm("eax");
-	((int (*)(const char* fmt, ...))_Logf)("send Ptr: %p\n", eax);
+	LogF("send Ptr: %p\n", eax);
 	return;
 }
 

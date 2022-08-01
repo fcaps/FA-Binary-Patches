@@ -94,13 +94,13 @@ void Conexecute()
 
 __attribute__((noinline)) void timed_out()
 {
-	((int (*)(const char* fmt, ...))_Logf)("SafeQuit sync timed out.\n");
+	LogF("SafeQuit sync timed out.\n");
 	return;
 }
 
 __attribute__((noinline)) void p_Version()
 {
-	((int (*)(const char* fmt, ...))_Logf)("Exe GitSHA: %s\n", gitsha);
+	LogF("Exe GitSHA: %s\n", gitsha);
 	return;
 }
 
@@ -209,13 +209,13 @@ void SessionEndGame()
 
 __attribute__((noinline)) void err_print()
 {
-	((int (*)(const char* fmt, ...))_Logf)("Block is too late !\n");
+	LogF("Block is too late !\n");
 	return;
 }
 
 __attribute__((noinline)) void term()
 {
-	((int (*)(const char* fmt, ...))_Logf)("terminated\n");
+	LogF("terminated\n");
 	return;
 }
 

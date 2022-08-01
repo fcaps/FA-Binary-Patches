@@ -101,12 +101,6 @@ LuaObjectFinalize
 
 // Other
 
-00937C30 SpewF(char* str, args...)
-00937CB0 LogF(char* str, args...)
-00937D30 WarningF(char* str, args...)
-0041C990 ConsoleLogF(char* str, args...)
-00A9B4E6 FileWrite(int fileIndex, const char* str, int strlen) index 3 is log.
-
 00938E00 Format
 00938F10 Format+1
 00A89950 _CxxThrowException
@@ -128,7 +122,7 @@ LuaObjectFinalize
 004CE020 DoFile(LuaObject* ecx, char* file, Table* env):al bool
 00908A70 GetVar(out LuaObject* ecx, LuaState**):eax LuaObject
 009132F0 lua_getinfo
-00AA549E StrCmp(char* str1, char* str2)
+00AA549E int StrCmp(char* str1, char* str2)
 00A89190 CopyMem(void* dest, void* src, len)
 006E5660 Moho_SetSetSize(moho_set* ecx, setSize)
 004036A0 Moho_SetAdd(moho_set* edi, setSize esi, out 0xC)
@@ -275,13 +269,18 @@ LuaObjectFinalize
 006856C0 SimFindEntityChainById(ecx* entities, ebx* id, eax* result)
 00898DC0 UserFindEntityChainById(ecx* entities, ebx* id, eax* result)
 */
-const int _Logf = 0x937CB0;
-const int LuaState__CastState = 0x90A510; // LuaState* (lua_state*)
-const int _LuaState__Error = 0x90C1D0; // (LuaState*, fmt, args...)
-const int _CastState_LuaState_LuaPlus__SAPAV12_PAUlua_State___Z = 0x90A510;
-const int __0LuaObject_LuaPlus__QAE_ABVLuaStackObject_1__Z = 0x908A70;
-const int __1LuaObject_LuaPlus__QAE_XZ = 0x9075D0;
+#define FDecl(addr, name, type) \
+  inline const auto name = (type)addr;
 
+FDecl(0x937CB0, LogF,		int (*)(const char *fmt, ...))
+FDecl(0x937D30, WarningF,	int (*)(const char *fmt, ...))
+FDecl(0x937C30, SpewF,		int (*)(const char *fmt, ...))
+FDecl(0x41C990, ConsoleLogF,	int (*)(const char *fmt, ...))
+FDecl(0xA9B4E6, FileWrite,	int (*)(int fileIndex, const char *str, int strlen)) //index 3 is log.
+FDecl(0xA825B9, shi_new,	void* (*)(int size))
+FDecl(0x958C40, shi_delete,	void (*)(void* ptr))
+
+const int _CastState_LuaState_LuaPlus__SAPAV12_PAUlua_State___Z = 0x90A510;
 const int LuaStackObject__GetBoolean = 0x415560;
 
 const int _AssignClientIndex_CLobby_Moho__AAEXHVStrArg_gpg__AAIAAH_Z = 0x7C4E80;
@@ -292,17 +291,10 @@ const int lua_cast_CLobby_ = 0x7CB7E0;
 const int Moho__NET_MakeNATTraversal_ = 0x7BC5F0; //(LuaObject* rvo, LuaState*)
 const int _Eval_Lua_Object = 0x6EEE40;
 
-// Utils
 const int __imp_atoi = 0xA835CE;
 
-const int __ftol2_sse = 0xA89CC0;
-
-const int __stricmp = 0xAA549E; //int (const char*, const char*)
-
 const int _Validate_IssueCommand = 0x006EECF0;
-const int _j_shi_delete_0 = 0x00A82542;
-const int _j_shi_new_0 = 0x00A82130;
 const int _Get_Lua_Coordinates_State = 0x006EEF60;
 const int _Push_Coordinates = 0x005E27D0;
 const int _Moho_UNIT_IssueCommand = 0x006F12C0;
-const int _Moho_SSTICommandIssueData_Destructor_SSTICommandIssueData = 0x0057ABB0;
+const int _Moho_SSTICommandIssueData_Destructor = 0x0057ABB0;
