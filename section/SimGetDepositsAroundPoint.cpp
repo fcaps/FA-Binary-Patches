@@ -1,4 +1,4 @@
-void SimGetDepositsAroundPoint()
+int SimGetDepositsAroundPoint(void* L)
 {
     const char* s_X1 = "X1";
     const char* s_Z1 = "Z1";
@@ -137,6 +137,7 @@ void SimGetDepositsAroundPoint()
         "ADD ESP,0x1C;"
 
         "MOV EAX,0x1;"
+        "RET;"
         :
         : [s_X1] "i" (s_X1), [s_Z1] "i" (s_Z1), [s_X2] "i" (s_X2), [s_Z2] "i" (s_Z2), [s_Type] "i" (s_Type), [s_Dist] "i" (s_Dist)
         :

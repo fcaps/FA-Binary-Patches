@@ -1,4 +1,4 @@
-void SimSetCommandSource()
+int SimSetCommandSource(void* L)
 {
     asm
     (
@@ -29,6 +29,7 @@ void SimSetCommandSource()
 	"L2:;"
 	"NOT EDX;"
 	"AND [EBX],EDX;"
+	"RET;"
     );
 }
 

@@ -1,4 +1,4 @@
-void SimSetFocusArmy()
+int SimSetFocusArmy(void* L)
 {
     asm
     (
@@ -7,5 +7,6 @@ void SimSetFocusArmy()
         "MOV ECX,[0x10C4F50];"     // g_STIDriver
         "MOV [ECX+0x0B0],EAX;"
         "XOR EAX,EAX;"             // Num return values
+        "RET;"
     );
 }

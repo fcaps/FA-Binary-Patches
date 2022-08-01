@@ -1,4 +1,4 @@
-void SimSessionIsReplay()
+int SimSessionIsReplay(void* L)
 {
     asm
     (
@@ -9,5 +9,6 @@ void SimSessionIsReplay()
         "CALL 0x0090CF80;" // lua_pushbool
         "ADD ESP,0x8;"
         "MOV EAX,0x1;"
+        "RET;"
     );
 }

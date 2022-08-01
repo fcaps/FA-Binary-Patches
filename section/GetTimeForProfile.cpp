@@ -1,4 +1,4 @@
-void GetTimeForProfile()
+int GetTimeForProfile(void* L)
 {
     asm
     (
@@ -22,5 +22,6 @@ void GetTimeForProfile()
         "CALL 0x0090CD40\n" //PushNumber
         "ADD ESP,0x8;"
         "MOV EAX,0x1;"
+        "RET;"
     );
 }

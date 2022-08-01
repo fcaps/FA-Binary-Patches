@@ -5,14 +5,14 @@ asm
   "CALL "QU(HeightCylinders)";"
 
   ".section h1; .set h1,0x7EE2BC;"
-  ".4byte "QU(MinCHeight)";"
+  ".int "QU(MinCHeight)";"
 
   ".section h2; .set h2,0x7EE33A;"
-  ".4byte "QU(MaxCHeight)";"
+  ".int "QU(MaxCHeight)";"
 
   ".section h3; .set h3,0x81C38E;"
-  ".4byte "QU(MinCHeight)";"
+  ".int "QU(MinCHeight)";"
 
   ".section h4; .set h4,0x81C3C5;"
-  ".4byte "QU(MaxCHeight)";"
+  ".int "QU(MaxCHeight)";"
 );

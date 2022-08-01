@@ -5,7 +5,7 @@
 //const char* sCQUEMOV = "CQUEMOV";
 //const char* sSTAYONWATSUR = "STAYONWATSUR";
 
-void SimSessionIsReplay();
+int SimSessionIsReplay(void* L);
 luaFuncDescReg SSIRRegDesc =  {0x00E45E90,          // Std register func
                                0x00E4AFBC,          // "SessionIsReplay"
                                0x00E00D90,          // "<global>"
@@ -14,7 +14,7 @@ luaFuncDescReg SSIRRegDesc =  {0x00E45E90,          // Std register func
                                SimSessionIsReplay,  // Func ptr
                                0x00000000};         // C++ class vtable ptr
 
-void SimSetCommandSource();
+int SimSetCommandSource(void* L);
 luaFuncDescReg SSCSRegDesc =  {0x00E45E90,
                                "SetCommandSource",
                                0x00E00D90,
@@ -25,7 +25,7 @@ luaFuncDescReg SSCSRegDesc =  {0x00E45E90,
 
 #define s_GDAPName "GetDepositsAroundPoint"
 #define s_GDAPDesc "(X, Z, Radius, Type)"
-void SimGetDepositsAroundPoint();
+int SimGetDepositsAroundPoint(void* L);
 luaFuncDescReg SGDAPRegDesc = {0x00E45E90,
                                s_GDAPName,
                                0x00E00D90,
@@ -36,7 +36,7 @@ luaFuncDescReg SGDAPRegDesc = {0x00E45E90,
 
 #define s_GTFPName "GetTimeForProfile"
 #define s_GTFPDesc "(OriginTime)"
-void GetTimeForProfile();
+int GetTimeForProfile(void* L);
 luaFuncDescReg SGTFPRegDesc = {0x00E45E90,
                                s_GTFPName,
                                0x00E00D90,
@@ -45,7 +45,7 @@ luaFuncDescReg SGTFPRegDesc = {0x00E45E90,
                                GetTimeForProfile,
                                0x00000000};
 
-void SimSetFocusArmy();
+int SimSetFocusArmy(void* L);
 luaFuncDescReg SSFARegDesc =  {0x00E45E90,          // Std register func
                                0x00E43408,          // "SetFocusArmy"
                                0x00E00D90,          // "<global>"

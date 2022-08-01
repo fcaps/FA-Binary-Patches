@@ -1,4 +1,3 @@
-#include <cstdint>
 #include "global.h"
 
 extern uint32_t tick_num;

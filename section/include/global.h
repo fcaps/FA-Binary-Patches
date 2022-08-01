@@ -1,4 +1,6 @@
 #pragma once
+
+#include <cstdint>
 /*
 GetClassNamePtr -> [[[Self]-4]+C]+8
 GetParentClassNamePtr -> [[[[Self]-4]+24+1*4]]+8
@@ -277,8 +279,14 @@ FDecl(0x937D30, WarningF,	int (*)(const char *fmt, ...))
 FDecl(0x937C30, SpewF,		int (*)(const char *fmt, ...))
 FDecl(0x41C990, ConsoleLogF,	int (*)(const char *fmt, ...))
 FDecl(0xA9B4E6, FileWrite,	int (*)(int fileIndex, const char *str, int strlen)) //index 3 is log.
-FDecl(0xA825B9, shi_new,	void* (*)(int size))
+FDecl(0xA825B9, shi_new,	void* (*)(uint32_t size))
 FDecl(0x958C40, shi_delete,	void (*)(void* ptr))
+
+#define WDecl(addr, type) \
+  ((__stdcall type)*(int*)(addr))
+
+#define GetModuleHandle WDecl(0xC0F378, void* (*)(const char* lpLibFileName))
+#define GetProcAddress WDecl(0xC0F48C, void* (*)(void* hModule, const char* lpProcName))
 
 const int _CastState_LuaState_LuaPlus__SAPAV12_PAUlua_State___Z = 0x90A510;
 const int LuaStackObject__GetBoolean = 0x415560;
