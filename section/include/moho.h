@@ -867,7 +867,7 @@ struct Sim // : ICommandSink
 	void* STIMap;           // from CSimDriver.LaunchInfoNew
 	CSimResources* Deposits;
 	// at 0x8D8
-	void* LuaStack; // 0x34 bytes
+	LuaState* state;
 	// at 0x8E6
 	bool cheatsEnabled;
 	// at 0x8F8
@@ -877,8 +877,7 @@ struct Sim // : ICommandSink
 	// at 0x904
 	void* unknown2; // 0x9CC bytes
 	void* unknown3; // 0x68 bytes
-	// at 0x91C Moho | at 0x90C FA
-	vector armies;// <class Moho::SimArmy *>
+	vector armies;// <class Moho::SimArmy*>
 	// at 0x920
 	list SSTICommandSources;
 	// at 0x93C Moho | at 0x92C FA
@@ -905,7 +904,7 @@ struct CWldSession
 	void* self_weird2; // = this + 0x8
 
 	// at 0x10
-	LuaState* state; // sim? set from constructor argument
+	LuaState* state; // set from constructor argument
 	void* unknown1; // 0x14 bytes
 	RRuleGameRules* rules;
 	CWldMap* map;
@@ -962,8 +961,10 @@ struct CSimDriver // : ISTIDriver
 	uint beatCounter1;
 	uint beatCounter2; // copied to address 0x1290710
 	uint beatCounter3;
-	// at 0xb0
-	int simFocusArmyIndex;
+	// at 0xB0
+	int focusArmyIndex;
+	// at 0x120
+	int focusArmyIndex2; //Copy from 0xB0
 	// at 0x228
 	int maxSimRate; // from CalcMaxSimRate
 };

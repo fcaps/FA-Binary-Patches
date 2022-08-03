@@ -1,4 +1,3 @@
-#include "../workflow.cpp"
 #include "include/desync_fix_global.h"
 
 const char* safe_quit = "safeQuit";

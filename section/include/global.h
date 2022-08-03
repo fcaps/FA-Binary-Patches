@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include "../../workflow.cpp"
 /*
 GetClassNamePtr -> [[[Self]-4]+C]+8
 GetParentClassNamePtr -> [[[[Self]-4]+24+1*4]]+8
@@ -20,63 +21,55 @@ Get debugging info about a Lua call:
 [[[CallInfo]-4]+18] = Proto       //lua.org/source/5.0/lobject.h.html#Proto
 [[CallInfo+0C]-[Proto+0C]+[Proto+14]] = currentline
 */
-// Globals
-const int g_STIDriver = 0x10C4F50;
-const int g_SWldSessionInfo = 0x10C4F58;
-const int g_CWldSession = 0x10A6470;
-const int g_Sim = 0x10A63F0;
-const int g_EntityCategoryTypeInfo = 0x10C6E70;
-const int g_CAiBrainTypeInfo = 0x10C6FA0;
-const int g_CUIManager = 0x10A6450;
-const int g_EngineStats = 0x10A67B8;
-const int g_WRenViewport = 0x10C7C28;
+#define GDecl(addr, type) \
+  ((type)*(int*)(addr))
 
-const int ui_SelectTolerance = 0x0F57A90;
-const int ui_ExtractSnapTolerance = 0x0F57A94;
-const int ui_DisableCursorFixing = 0x10A6464;
-const int ui_RenderIcons = 0x00F57B27;
-const int range_RenderSelected = 0x010A640A;
-const int range_RenderHighlighted = 0x010A640B;
-const int range_RenderBuild = 0x010A6414;
+#define FDecl(addr, name, type) \
+  inline const auto name = (type)addr;
 
-// String const
-const int s_FACTORY = 0xE19824;
-const int s_EXPERIMENTAL = 0xE204B8;
-const int s_global = 0xE00D90; // "<global>"
+#define g_STIDriver			GDecl(0x10C4F50, void*)
+#define g_SWldSessionInfo		GDecl(0x10C4F58, void*)
+#define g_CWldSession			GDecl(0x10A6470, void*)
+#define g_Sim				GDecl(0x10A63F0, void*)
+#define g_EntityCategoryTypeInfo	GDecl(0x10C6E70, void*)
+#define g_CAiBrainTypeInfo		GDecl(0x10C6FA0, void*)
+#define g_CUIManager			GDecl(0x10A6450, void*)
+#define g_EngineStats			GDecl(0x10A67B8, void*)
+#define g_WRenViewport			GDecl(0x10C7C28, void*)
+#define g_ConsoleLuaState		GDecl(0x1104410, LuaState)
 
-// Byte const
+#define ui_ProgressBarColor		GDecl(0x0F57BB8, int)
+#define ui_SelectTolerance		GDecl(0x0F57A90, float)
+#define ui_ExtractSnapTolerance		GDecl(0x0F57A94, float)
+#define ui_DisableCursorFixing		GDecl(0x10A6464, bool)
+#define ui_RenderIcons			GDecl(0x0F57B27, bool)
+#define range_RenderSelected		GDecl(0x10A640A, bool)
+#define range_RenderHighlighted		GDecl(0x10A640B, bool)
+#define range_RenderBuild		GDecl(0x10A6414, bool)
+#define d3d_WindowsCursor		GDecl(0x10A636E, bool)
 
-const char d3d_WindowsCursor = 0x010A636E;
+#define s_FACTORY			GDecl(0xE19824, const char*)
+#define s_EXPERIMENTAL			GDecl(0xE204B8, const char*)
+#define s_global			GDecl(0xE00D90, const char*) // "<global>"
 
-// Int const
+#define g_ExeVersion1			GDecl(0x876666, const int)
+#define g_ExeVersion2			GDecl(0x87612d, const int)
+#define g_ExeVersion3			GDecl(0x4d3d40, const int)
 
-const int g_ExeVersion1 = 0x00876666;
-const int g_ExeVersion2 = 0x0087612d;
-const int g_ExeVersion3 = 0x004d3d40;
+FDecl(0x937CB0, LogF,		int (*)(const char *fmt, ...))
+FDecl(0x937D30, WarningF,	int (*)(const char *fmt, ...))
+FDecl(0x937C30, SpewF,		int (*)(const char *fmt, ...))
+FDecl(0x41C990, ConsoleLogF,	int (*)(const char *fmt, ...))
+FDecl(0xA9B4E6, FileWrite,	int (*)(int fileIndex, const char *str, int strlen)) //index 3 is log.
+FDecl(0xA825B9, shi_new,	void* (*)(uint32_t size))
+FDecl(0x958C40, shi_delete,	void (*)(void* ptr))
 
-const int ui_ProgressBarColor = 0x00F57BB8;
+#define GetModuleHandle GDecl(0xC0F378, __stdcall void* (*)(const char* lpLibFileName))
+#define GetProcAddress  GDecl(0xC0F48C, __stdcall void* (*)(void* hModule, const char* lpProcName))
 
-//Adress const
-const int _CannotQueCommandInConstruct = 0x006EFB0E;
-const int _CanQueCommandInConstruct = 0x006EFAF8;
-const int _NeitherInCategoryInConstruct = 0x006EFACE;
-const int _EndCalculateNoRushTimerVariable = 0x006FF3D6;
-
-// c Symbols
-
-const int _CheckCategory = 	0x00405550;
-const int _CheckCategory_sub_func = 0x004059E0;
-const int _GetCatCmpResult = 0x0067B050;
-const int _exit_STAYONWATSUR_check = 0x0062ADEE;
-const int _exit_STAYONWATSUR_NoMatch = 0x0062ADEC;
-const int _Moho_SSTICommandIssueData_SSTICommandIssueData = 0x00552550;
-
-//extern functions:
-//MSVCR80.dll
-const int _memmove_s = 0x00A824E7;
-
-//LuaPlus: See FALuaFuncs.txt
 /*
+LuaPlus: See FALuaFuncs.txt
+
 Use Tables example:
 CreateTable
   CreateTable
@@ -270,23 +263,6 @@ LuaObjectFinalize
 0057CBB0 CanBuildStructureAt(CAiBrain*, x, y, z, Blueprint*, ?, ?, ?):al
 006856C0 SimFindEntityChainById(ecx* entities, ebx* id, eax* result)
 00898DC0 UserFindEntityChainById(ecx* entities, ebx* id, eax* result)
-*/
-#define FDecl(addr, name, type) \
-  inline const auto name = (type)addr;
-
-FDecl(0x937CB0, LogF,		int (*)(const char *fmt, ...))
-FDecl(0x937D30, WarningF,	int (*)(const char *fmt, ...))
-FDecl(0x937C30, SpewF,		int (*)(const char *fmt, ...))
-FDecl(0x41C990, ConsoleLogF,	int (*)(const char *fmt, ...))
-FDecl(0xA9B4E6, FileWrite,	int (*)(int fileIndex, const char *str, int strlen)) //index 3 is log.
-FDecl(0xA825B9, shi_new,	void* (*)(uint32_t size))
-FDecl(0x958C40, shi_delete,	void (*)(void* ptr))
-
-#define WDecl(addr, type) \
-  ((__stdcall type)*(int*)(addr))
-
-#define GetModuleHandle WDecl(0xC0F378, void* (*)(const char* lpLibFileName))
-#define GetProcAddress WDecl(0xC0F48C, void* (*)(void* hModule, const char* lpProcName))
 
 const int _CastState_LuaState_LuaPlus__SAPAV12_PAUlua_State___Z = 0x90A510;
 const int LuaStackObject__GetBoolean = 0x415560;
@@ -306,3 +282,19 @@ const int _Get_Lua_Coordinates_State = 0x006EEF60;
 const int _Push_Coordinates = 0x005E27D0;
 const int _Moho_UNIT_IssueCommand = 0x006F12C0;
 const int _Moho_SSTICommandIssueData_Destructor = 0x0057ABB0;
+
+#define _CannotQueCommandInConstruct = 0x006EFB0E;
+#define _CanQueCommandInConstruct = 0x006EFAF8;
+#define _NeitherInCategoryInConstruct = 0x006EFACE;
+#define _EndCalculateNoRushTimerVariable = 0x006FF3D6;
+
+#define _CheckCategory = 0x00405550;
+#define _CheckCategory_sub_func = 0x004059E0;
+#define _GetCatCmpResult = 0x0067B050;
+#define _exit_STAYONWATSUR_check = 0x0062ADEE;
+#define _exit_STAYONWATSUR_NoMatch = 0x0062ADEC;
+#define _Moho_SSTICommandIssueData_SSTICommandIssueData = 0x00552550;
+
+// MSVCR80.dll
+#define _memmove_s = 0x00A824E7;
+*/
