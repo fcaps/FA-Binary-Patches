@@ -1,4 +1,3 @@
-
 char _sCQUEMOV[] = "CQUEMOV";
 char** _pCQUEMOV = (char**)&_sCQUEMOV;
 
@@ -8,12 +7,12 @@ void BuildUnit()
     (
         "PUSH 0x00E19824;"
         "JMP SHORT L1;"
-		"L2:\n"
+        "L2:;"
 	);
 
 	asm
     (
-	    "PUSH %[_pCQUEMOV];"
+        "PUSH %[_pCQUEMOV];"
         "MOV EDX,SS:[ESP-0x80];"
         "MOV ECX,SS:[ESP];"
         "MOV EDX,SS:[EDX];"

@@ -41,7 +41,7 @@ void GetTableSize()
         "SUB ESP,0x4;"
         "MOVSS [ESP],XMM0;"
         "PUSH ESI;"
-        "CALL 0x0090CD40\n"     //PushNumber
+        "CALL 0x0090CD40;"     //PushNumber
         "ADD ESP,0x8;"
         "MOV EAX,0x1;"
         "RET;"
@@ -90,7 +90,7 @@ void IsTableEmpty()
         "PUSH 0x0;"
         "L12:;"
         "PUSH ESI;"
-        "CALL 0x0090CF80\n"     //PushBool
+        "CALL 0x0090CF80;"     //PushBool
         "ADD ESP,0x8;"
         "MOV EAX,0x1;"
     );

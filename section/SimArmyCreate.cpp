@@ -2,7 +2,7 @@ void SimArmyCreate()
 {
     asm
     (
-        "SUB ECX,ESI\n"
+        "SUB ECX,ESI;"
         "PUSH ECX;"
         "PUSH EAX;"
         "PUSHAD;"

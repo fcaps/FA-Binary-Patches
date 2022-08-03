@@ -19,7 +19,7 @@ int GetTimeForProfile(void* L)
         "FSTP DWORD PTR [ESP+0x4];"
 
         "MOV [ESP], ESI;"
-        "CALL 0x0090CD40\n" //PushNumber
+        "CALL 0x0090CD40;" //PushNumber
         "ADD ESP,0x8;"
         "MOV EAX,0x1;"
         "RET;"

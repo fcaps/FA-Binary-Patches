@@ -397,7 +397,7 @@ void MOHO_USER_INPUT()
 		"call eax;"
 		"fld dword ptr [0xF57AA0];"
 		"fcomip st(1);"
-		"fstp st(0)\n "
+		"fstp st(0);"
 		"jbe L0xABEL_0x00870A70;"
 		"L0xABEL_0x008709A8:;"
 		"cmp byte ptr [edi+0x275],0x0;"

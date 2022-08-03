@@ -94,13 +94,13 @@ void Conexecute()
 
 __attribute__((noinline)) void timed_out()
 {
-	LogF("SafeQuit sync timed out.\n");
+	LogF("SafeQuit sync timed out");
 	return;
 }
 
 __attribute__((noinline)) void p_Version()
 {
-	LogF("Exe GitSHA: %s\n", gitsha);
+	LogF("Exe GitSHA: %s", gitsha);
 	return;
 }
 
@@ -209,13 +209,13 @@ void SessionEndGame()
 
 __attribute__((noinline)) void err_print()
 {
-	LogF("Block is too late !\n");
+	LogF("Block is too late !");
 	return;
 }
 
 __attribute__((noinline)) void term()
 {
-	LogF("terminated\n");
+	LogF("terminated");
 	return;
 }
 

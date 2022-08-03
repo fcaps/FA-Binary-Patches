@@ -10,13 +10,13 @@ uint32_t discard = 0;
 
 __attribute__((noinline)) void p_SetEvent()
 {
-	LogF("Callback packet received, exit sync is over\n");
+	LogF("Callback packet received, exit sync is over");
 	return;
 }
 
 __attribute__((noinline)) void p_Tag()
 {
-	LogF("Tag packet sent\n");
+	LogF("Tag packet sent");
 	return;
 }
 
@@ -28,7 +28,7 @@ __attribute__((noinline)) void CheckClients()
 	{
 		if (sync_buffer[i] == eax)
 		{
-			LogF("Discarded: %p\n", eax);
+			LogF("Discarded: %p", eax);
 			discard = 1;
 			break;
 		}
@@ -39,14 +39,14 @@ __attribute__((noinline)) void CheckClients()
 __attribute__((noinline)) void p_rptr()
 {
 	register int eax asm("eax");
-	LogF("recv Ptr: %p\n", eax);
+	LogF("recv Ptr: %p", eax);
 	return;
 }
 
 __attribute__((noinline)) void p_sptr()
 {
 	register int eax asm("eax");
-	LogF("send Ptr: %p\n", eax);
+	LogF("send Ptr: %p", eax);
 	return;
 }
 
@@ -286,9 +286,9 @@ void _sendto()
 		"cmp dword ptr [0x011FD243], 0x1;" //CHECK IF SESSIONENDGAME WAS TRIGGERED (sender only)
 		"jne is_receiver;"
 		"mov eax, edi;" //if here, it is sender
-		"cmp byte ptr [eax + 0x3], 0\n"  //overwrite only known memory, ie 0
+		"cmp byte ptr [eax + 0x3], 0;"  //overwrite only known memory, ie 0
 		"jne skip;"
-		"cmp byte ptr [eax + 0x2], 0\n"
+		"cmp byte ptr [eax + 0x2], 0;"
 		"jne skip;"
 		"mov byte ptr [eax + 0x3], 0xA4;" //WRITE VAR INTO THE PACKET HEADER
 		"mov byte ptr [eax + 0x2], 0x4E;" //WRITE VAR INTO THE PACKET HEADER
@@ -327,9 +327,9 @@ void _sendto()
 			asm
 			(
 			"mov eax, edi;"
-			"cmp byte ptr [eax + 0x3], 0\n"     //overwrite only known memory, ie 0
+			"cmp byte ptr [eax + 0x3], 0;"     //overwrite only known memory, ie 0
 			"jne skip;"
-			"cmp byte ptr [eax + 0x2], 0\n"
+			"cmp byte ptr [eax + 0x2], 0;"
 			"jne skip;"
 			"mov byte ptr [eax + 0x3], 0xFE;" //if receiver got the packet, notify the sender with 0xFE
 			"mov byte ptr [eax + 0x2], 0x18;"
