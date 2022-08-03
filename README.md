@@ -10,6 +10,9 @@ This are just the patch files for this game. I decided to separate them from pat
 
 # Change List
 ## Fixes
+- Updated used DLLs(MsftEdit, D3DX9_43, X3DAudio1_7, XACTEngine2_10)
+    - hooks/HUpdDlls.cpp
+    - section/UpdDlls.cpp
 - Zeroing GuardScanRadius if the unit's order is not Patrol/AttackMove. Increases performance.
     - hooks/HGuardFix.cpp
     - section/GuardFix.cpp
