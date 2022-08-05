@@ -109,9 +109,11 @@ namespace LuaPlus
         LuaObject* m_prev;  // only valid when in used list
       } m_headObject,  m_tailObject;
 
+      enum StandardLibraries {LIB_NONE, LIB_BASE, LIB_OSIO};
+
       LuaState(LuaState*); //0x90a520
       LuaState(enum StandardLibraries); //0x90ac10
-      LuaState(enum UnattachedTag); //0x90a5d0
+      LuaState(int Unused); //0x90a5d0
       ~LuaState(); //0x90a600
       LuaObject GetGlobal(const char*); //0x4579d0
       LuaObject GetGlobals(); //0x90a690
@@ -120,9 +122,6 @@ namespace LuaPlus
       int ArgError(int, const char*); //0x90bf70
       lua_State* GetActiveCState(); //0x90bef0
       void CheckAny(int); //0x923f20
-      void CollectGarbage(); //0x911e90
-      void CollectGarbage(); //0x9176f0
-      void CollectGarbage(); //0x917710
 
     private:
       void Init(enum StandardLibraries); //0x90aad0
