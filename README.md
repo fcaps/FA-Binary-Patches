@@ -52,7 +52,9 @@ This are just the patch files for this game. I decided to separate them from pat
     - hooks/WayPointArrive.cpp
 
 ## Additions
-- Allowing customize colors for team color mode
+- Allows changing army of ACUs
+    - hooks/HTransferACUs.cpp
+- Allows customize colors for team color mode
     - hooks/TeamColorMode.cpp
     - section/TeamColorMode.cpp
 - GetSessionClients also output maximum sim speed(maxSP)
