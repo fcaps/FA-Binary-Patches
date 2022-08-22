@@ -16,7 +16,7 @@ int SetInvertMidMouseButton(lua_State *L)
     VirtualProtect(reinterpret_cast<void *>(0x0086E01F), 9, 0x40, &oldProt);
     *reinterpret_cast<uint8_t*>(0x0086E01F) = status ? 0x29 : 0x01; // asm sub or add
     *reinterpret_cast<uint8_t*>(0x0086E027) = status ? 0x29 : 0x01; // asm sub or add
-    VirtualProtect(reinterpret_cast<void *>(0x0086E027), 9, oldProt, &oldProt);
+    VirtualProtect(reinterpret_cast<void *>(0x0086E01F), 9, oldProt, &oldProt);
 
     return 0;
 }
