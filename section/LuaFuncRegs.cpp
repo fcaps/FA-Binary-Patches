@@ -1,6 +1,6 @@
 #include "include/moho.h"
 
-int SimSessionIsReplay(void* L);
+int SimSessionIsReplay(void *L); // End Sim chain
 luaFuncDescReg SSIRRegDesc =  {0x00E45E90,          // Std register func
                                0x00E4AFBC,          // "SessionIsReplay"
                                0x00E00D90,          // "<global>"
@@ -9,7 +9,7 @@ luaFuncDescReg SSIRRegDesc =  {0x00E45E90,          // Std register func
                                SimSessionIsReplay,  // Func ptr
                                0x00000000};         // C++ class vtable ptr
 
-int SimSetCommandSource(void* L);
+int SimSetCommandSource(void *L);
 luaFuncDescReg SSCSRegDesc =  {0x00E45E90,
                                "SetCommandSource",
                                0x00E00D90,
@@ -20,7 +20,7 @@ luaFuncDescReg SSCSRegDesc =  {0x00E45E90,
 
 #define s_GDAPName "GetDepositsAroundPoint"
 #define s_GDAPDesc "(X, Z, Radius, Type)"
-int SimGetDepositsAroundPoint(void* L);
+int SimGetDepositsAroundPoint(void *L);
 luaFuncDescReg SGDAPRegDesc = {0x00E45E90,
                                s_GDAPName,
                                0x00E00D90,
@@ -31,7 +31,7 @@ luaFuncDescReg SGDAPRegDesc = {0x00E45E90,
 
 #define s_GTFPName "GetTimeForProfile"
 #define s_GTFPDesc "(OriginTime)"
-int GetTimeForProfile(void* L);
+int GetTimeForProfile(void *L);
 luaFuncDescReg SGTFPRegDesc = {0x00E45E90,
                                s_GTFPName,
                                0x00E00D90,
@@ -40,16 +40,24 @@ luaFuncDescReg SGTFPRegDesc = {0x00E45E90,
                                GetTimeForProfile,
                                0x00000000};
 
-int SimSetFocusArmy(void* L);
+luaFuncDescReg SGMWPRegDesc = {0x00E45E90,
+                               0x00E451A4,          // "GetMouseWorldPos"
+                               0x00E00D90,
+                               0x00E45188,
+                               &SGTFPRegDesc,
+                               0x00842BB0,
+                               0x00000000};
+
+int SimSetFocusArmy(void *L); // Sim chain entry
 luaFuncDescReg SSFARegDesc =  {0x00E45E90,          // Std register func
                                0x00E43408,          // "SetFocusArmy"
                                0x00E00D90,          // "<global>"
                                0x00E451FC,          // "SetFocusArmy(armyIndex or -1)"
-                               &SGTFPRegDesc,       // Next reg desc
+                               &SGMWPRegDesc,       // Next reg desc
                                SimSetFocusArmy,     // Func ptr
                                0x00000000};         // C++ class vtable ptr
 
-luaFuncDescReg UGTFPRegDesc = {0x00E45E90,
+luaFuncDescReg UGTFPRegDesc = {0x00E45E90, // UI chain end
                                s_GTFPName,
                                0x00E00D90,
                                s_GTFPDesc,
@@ -57,10 +65,19 @@ luaFuncDescReg UGTFPRegDesc = {0x00E45E90,
                                GetTimeForProfile,
                                0x00000000};
 
-luaFuncDescReg UGDAPRegDesc = {0x00E45E90,
+int SetInvertMidMouseButton(lua_State *L);
+luaFuncDescReg USIMMBRegDesc = {0x00E45E90,
+                               "SetInvertMidMouseButton",
+                               0x00E00D90,
+                               "(bool)",
+                               &UGTFPRegDesc,
+                               SetInvertMidMouseButton,
+                               0x00000000};
+
+luaFuncDescReg UGDAPRegDesc = {0x00E45E90, // UI chain entry
                                s_GDAPName,
                                0x00E00D90,
                                s_GDAPDesc,
-                               &UGTFPRegDesc,       // Next reg desc
+                               &USIMMBRegDesc,       // Next reg desc
                                SimGetDepositsAroundPoint,
                                0x00000000};

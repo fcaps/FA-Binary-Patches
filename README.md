@@ -81,6 +81,9 @@ This are just the patch files for this game. I decided to separate them from pat
     - hooks/UserGetDepositsAroundPoint.cpp
     - section/SimGetDepositsAroundPoint.cpp
     - section/LuaFuncRegs.cpp
+- Adds SetInvertMidMouseButton to UI
+    - section/InvertMidMouseButton.cpp
+    - section/LuaFuncRegs.cpp
 - Allow devs to write console commands to the log
     - hooks/ConsoleLog.cpp
     - section/ConsoleLog.cpp
@@ -88,6 +91,8 @@ This are just the patch files for this game. I decided to separate them from pat
     - hooks/UnlockUltraPreset.cpp
 - Adds SetCommandSource to Sim. Allow armies to be shared by multiple players
     - section/SimSetCommandSource.cpp
+    - section/LuaFuncRegs.cpp
+- Adds GetMouseWorldPos to Sim
     - section/LuaFuncRegs.cpp
 - Adds SessionIsReplay to Sim
     - section/SimIsReplay.cpp
