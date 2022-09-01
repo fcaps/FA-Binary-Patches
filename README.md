@@ -46,6 +46,8 @@ This are just the patch files for this game. I decided to separate them from pat
     - hooks/aiinitattack.cpp
 - Fix a crash when units arrive at waypoints
     - hooks/WayPointArrive.cpp
+- Improvements to lua messages
+    - hooks/LuaErrorMessages.cpp
 
 ## Additions
 - Allows changing army of ACUs
@@ -53,6 +55,9 @@ This are just the patch files for this game. I decided to separate them from pat
 - Allows customize colors for team color mode
     - hooks/TeamColorMode.cpp
     - section/TeamColorMode.cpp
+- Adds the order ID to the UserUnit:GetCommandQueue output
+    - hooks/HOrderIDOutput.cpp
+    - section/OrderIDOutput.cpp
 - GetSessionClients also output maximum sim speed(maxSP)
     - hooks/HOutputMaxSP.cpp
     - section/OutputMaxSP.cpp
