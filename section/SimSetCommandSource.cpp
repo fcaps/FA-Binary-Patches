@@ -1,7 +1,6 @@
 int SimSetCommandSource(void* L)
 {
-    asm
-    (
+    asm(
 	"MOV EDI,[ESI+0xC];"
 	"MOV EAX,[0x10A63F0];"
 	"MOV EAX,[EAX+0x910];"

@@ -1,7 +1,6 @@
 int SimSessionIsReplay(void* L)
 {
-    asm
-    (
+    asm(
         "MOV EAX,[0x10A6470];"
         "MOVZX EAX,byte ptr[EAX+0x484];"
         "PUSH EAX;"
