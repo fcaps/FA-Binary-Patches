@@ -2,13 +2,13 @@
 
 struct luaFuncDescReg
 {	// 0x1C bytes
-	void** RegisterFunc;  // call for register lua function
-	char* FuncName;       // lua name function
-	char* ClassName;      // lua class name. <global> if class none
-	char* FuncDesc;       // for log
-	luaFuncDescReg* Next; // reg func of chain
-	void* FuncPtr;        // code address
-	void* ClassPtr;       // C++ class type address. NULL if class none
+	void **RegisterFunc;  // call for register lua function
+	char *FuncName;       // lua name function
+	char *ClassName;      // lua class name. <global> if class none
+	char *FuncDesc;       // for log
+	luaFuncDescReg *Next; // reg func of chain
+	void *FuncPtr;        // code address
+	void *ClassPtr;       // C++ class type address. NULL if class none
 };
 VALIDATE_SIZE(luaFuncDescReg, 0x1C)
 
