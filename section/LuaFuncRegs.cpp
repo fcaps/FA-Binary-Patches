@@ -1,6 +1,18 @@
 #include "include/moho.h"
 
-int SimSessionIsReplay(void *L); // End Sim chain
+struct luaFuncDescReg
+{	// 0x1C bytes
+	void** RegisterFunc;  // call for register lua function
+	char* FuncName;       // lua name function
+	char* ClassName;      // lua class name. <global> if class none
+	char* FuncDesc;       // for log
+	luaFuncDescReg* Next; // reg func of chain
+	void* FuncPtr;        // code address
+	void* ClassPtr;       // C++ class type address. NULL if class none
+};
+VALIDATE_SIZE(luaFuncDescReg, 0x1C)
+
+int SimSessionIsReplay(lua_State *L); // End Sim chain
 luaFuncDescReg SSIRRegDesc =  {0x00E45E90,          // Std register func
                                0x00E4AFBC,          // "SessionIsReplay"
                                0x00E00D90,          // "<global>"
@@ -9,7 +21,7 @@ luaFuncDescReg SSIRRegDesc =  {0x00E45E90,          // Std register func
                                SimSessionIsReplay,  // Func ptr
                                0x00000000};         // C++ class vtable ptr
 
-int SimSetCommandSource(void *L);
+int SimSetCommandSource(lua_State *L);
 luaFuncDescReg SSCSRegDesc =  {0x00E45E90,
                                "SetCommandSource",
                                0x00E00D90,
@@ -20,7 +32,7 @@ luaFuncDescReg SSCSRegDesc =  {0x00E45E90,
 
 #define s_GDAPName "GetDepositsAroundPoint"
 #define s_GDAPDesc "(X, Z, Radius, Type)"
-int SimGetDepositsAroundPoint(void *L);
+int SimGetDepositsAroundPoint(lua_State *L);
 luaFuncDescReg SGDAPRegDesc = {0x00E45E90,
                                s_GDAPName,
                                0x00E00D90,
@@ -31,7 +43,7 @@ luaFuncDescReg SGDAPRegDesc = {0x00E45E90,
 
 #define s_GTFPName "GetTimeForProfile"
 #define s_GTFPDesc "(OriginTime)"
-int GetTimeForProfile(void *L);
+int GetTimeForProfile(lua_State *L);
 luaFuncDescReg SGTFPRegDesc = {0x00E45E90,
                                s_GTFPName,
                                0x00E00D90,
@@ -48,7 +60,7 @@ luaFuncDescReg SGMWPRegDesc = {0x00E45E90,
                                0x00842BB0,
                                0x00000000};
 
-int SimSetFocusArmy(void *L); // Sim chain entry
+int SimSetFocusArmy(lua_State *L); // Sim chain entry
 luaFuncDescReg SSFARegDesc =  {0x00E45E90,          // Std register func
                                0x00E43408,          // "SetFocusArmy"
                                0x00E00D90,          // "<global>"
