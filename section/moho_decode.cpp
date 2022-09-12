@@ -1,3 +1,5 @@
+#pragma GCC optimize("O3")
+
 #include "include/desync_fix_global.h"
 
 const char* safe_quit = "safeQuit";
@@ -950,3 +952,4 @@ void Update_Pipeline_Stream()
 		"ret 0x4;"
 	);
 }
+#pragma GCC reset_options

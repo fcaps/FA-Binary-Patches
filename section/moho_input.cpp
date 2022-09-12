@@ -1,3 +1,5 @@
+#pragma GCC optimize("O3")
+
 #include "include/desync_fix_global.h"
 
 uint32_t input_tick = 0;
@@ -985,3 +987,4 @@ void MOHO_USER_INPUT()
 		"ret 0x4;"
 	);
 }
+#pragma GCC reset_options

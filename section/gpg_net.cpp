@@ -1,3 +1,5 @@
+#pragma GCC optimize("O3")
+
 #include "include/desync_fix_global.h"
 
 uint32_t tag_sent = 0;
@@ -861,3 +863,4 @@ void EndGame()
 		"ret;"
 	);
 }
+#pragma GCC reset_options
