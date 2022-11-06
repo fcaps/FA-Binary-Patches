@@ -89,9 +89,6 @@ This are just the patch files for this game. I decided to separate them from pat
 - Adds SetInvertMidMouseButton to UI
     - section/InvertMidMouseButton.cpp
     - section/LuaFuncRegs.cpp
-- Writes called console commands to the log
-    - hooks/ConsoleLog.cpp
-    - section/ConsoleLog.cpp
 - Unlock an "Ultra" graphics preset
     - hooks/UnlockUltraPreset.cpp
 - Adds SetCommandSource to Sim. Allow armies to be shared by multiple players
