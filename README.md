@@ -10,6 +10,12 @@ This are just the patch files for this game. I decided to separate them from pat
 
 # Change List
 ## Fixes
+- Reduce call sim beat of UI
+    - hooks/HUIReduceCallSimBeat.cpp
+- Removing CTRL formations
+    - hooks/HRemovingCTRLFormations.cpp
+- Ignore empty reclaim orders
+    - hooks/HIgnoreEmptyReclaim.cpp
 - Zeroing GuardScanRadius if the unit's order is not Patrol/AttackMove. Increases performance.
     - hooks/HGuardFix.cpp
     - section/GuardFix.cpp
