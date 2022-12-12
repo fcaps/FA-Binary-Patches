@@ -7,11 +7,11 @@ asm(
   ".section h1; .set h1,0x73B43D;"
   ".byte 0xEB;"
 
-  /*Do not call sim beat when ordering a unit
+  //Do not call sim beat when ordering a unit
   ".section h2; .set h2,0x73CBC9;"
   ".byte 0xEB;"
 
-  //Do not call sim beat when pause
+  /*Do not call sim beat when pause
   ".section h3; .set h3,0x73C6AD;"
   ".byte 0xEB;"
 
