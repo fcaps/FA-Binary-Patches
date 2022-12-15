@@ -10,6 +10,8 @@ This are just the patch files for this game. I decided to separate them from pat
 
 # Change List
 ## Fixes
+- Allows to use 4GB on x64
+    - hooks/HFix4GB.cpp
 - Reduce call sim beat of UI
     - hooks/HUIReduceCallSimBeat.cpp
 - Removing CTRL formations
