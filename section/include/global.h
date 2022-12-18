@@ -43,6 +43,7 @@ Get debugging info about a Lua call:
 #define g_EngineStats			GDecl(0x10A67B8, EngineStats*)
 #define g_WRenViewport			GDecl(0x10C7C28, WRenViewport*)
 #define g_ConsoleLuaState		GDecl(0x10A6478, LuaState*)
+#define g_Device			GDecl(0x0F8E284, Device*)
 
 #define ui_ProgressBarColor		GDecl(0x0F57BB8, int)
 #define ui_SelectTolerance		GDecl(0x0F57A90, float)
@@ -202,6 +203,10 @@ LuaObjectFinalize
 008F4260 D3DXEffect::EndPass ?
 00941D70 D3DXEffect::SetMatrix ?
 00941F60 D3DXEffect::SetTechnique
+00943A90 EffectVariableD3D9::SetMem(int len, float *ptr)
+00943E10 EffectVariableD3D9::SetMatrix4x4(float *ptr)
+00943550 EffectVariableD3D9::SetFloat(float *ptr)
+00452AF0 Vec3NormInPlace(float* ecx)
 008F5950 LockVertexBuffer
 008F5B40 UnlockVertexBuffer
 0081F7B0 GetLeftMouseButtonAction
@@ -209,6 +214,8 @@ LuaObjectFinalize
 008B43F0 GetEntitiesUnderCursor ?
 00858D80 DisplayEconomyOverlay
 00430590 D3DGetDevice
+008E6730 GetDeviceD3D9
+00430590 GetCD3DDeviceVTbl**
 008D82F0 CreateBitArray2D
 008D8210 BitArray2DReset
 008D8200 DestroyBitArray2D
@@ -252,6 +259,7 @@ LuaObjectFinalize
 007AA9C0 CreateCamera
 007A7950 InitCamera
 007A7DC0 DestroyCamera
+0086E060 InitCameraDragger
 00749F40 SimBeat
 0073DAD0 SimSync
 00894530 UserSync
@@ -282,13 +290,18 @@ LuaObjectFinalize
 005289D0 RegisterBlueprint(RRuleGameRules*, char* Category)
 007FA230 CreateWRenViewport
 007F66A0 InitWRenViewport
+007F90D0 TerrainRender
+008015C0 SetTerrainVariables
+007D2EA0 SetCartographicVariables
+007E19D0 SetMeshVariables
 007EDFE0 GenerateRingCylinders
 007EF5A0 RenderRings
 005779C0 CreateMapData
 004783D0 CreateTerrainHeights
 00577890 InitSTIMap
 005790E0 CreateCHeightField
-0044FB90 GetTerrainHeight(float x, float z):int ecx
+0044FB90 GetTerrainHeight(MapData*, float x, float z):int ecx
+00758E10 GetTerrainType(STIMap* eax, int esi X, int edi Z):LuaObject ebx
 0074B120 FlattenTerrain(STIMap*, int Rect*, float Height)
 00476BB0 UpdateMinimap(MapData*, int x1, int y1, int x2, int y2)
 00890DA0 MapLoad

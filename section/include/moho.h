@@ -864,6 +864,7 @@ struct ReconBlip : Entity
 	void *armyesData[]; //size 0x34
 };
 
+struct STIMap;
 struct Sim // : ICommandSink
 {	// 0xAF8 bytes
 	void *vtable;
@@ -877,11 +878,11 @@ struct Sim // : ICommandSink
 	void *CEffectManager;	// 0x18 bytes
 	void *CSimSoundManager; // 0x720 bytes
 	RRuleGameRules *rules;	// From CSimDriver.LaunchInfoNew
-	void *STIMap;		// From CSimDriver.LaunchInfoNew
+	STIMap *STIMap;		// From CSimDriver.LaunchInfoNew
 	CSimResources *res;
 	uint8_t pad3[4];
 	// at 0x8D8
-	LuaState *state;
+	LuaState *LState;
 	uint8_t pad4[0xA];
 	// at 0x8E6
 	bool cheatsEnabled;
@@ -1020,31 +1021,39 @@ struct CHeightField // : class detail::boost::sp_counted_base
 
 struct MapData
 {	// 0x1C bytes
-	uint32_t* TerrainHeights; // Word(TerrainHeights+(Y*SizeX+X)*2)
+	uint32_t *TerrainHeights; // Word(TerrainHeights+(Y*SizeX+X)*2)
 	int SizeX; // +1
 	int SizeY; // +1
 };
 
 struct STIMap
 {	// 0x1548 bytes
-	MapData* MapData;
-	CHeightField* HeightField;
+	MapData *MapData;
+	CHeightField *HeightField;
+	uint32_t unk1[4];
 	// at 0x18
-	//list Data; -> Data
+	void *beginData;
+	void *endData;
+	void *endData2;
+	void *beginData2;
 	// at 0x28
-	char Data[0x1400];
-	char* TerrainTypes; // TerrainTypes+(Y*SizeX+X)
+	LuaObject Data[0x100]; // Type desc tables
+	uint8_t *TerrainTypes; // TerrainTypes+(Y*SizeX+X)
 	int SizeX;
 	int SizeY;
+	uint8_t unk2[0x100];
 	// at 0x1534
-	bool Water;
-	// at 0x1538
+	BOOL Water;
 	float WaterLevel;
+	float DepthLevel;
+	float AbyssLevel;
+	uint32_t unk3;
 };
+VALIDATE_SIZE(STIMap, 0x1548);
 
 struct CPushTask
 {
-	char datas[0x24];
+	char data[0x24];
 };
 
 typedef CPushTask CPullTask;
