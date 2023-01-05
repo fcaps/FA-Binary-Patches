@@ -10,6 +10,9 @@ This are just the patch files for this game. I decided to separate them from pat
 
 # Change List
 ## Fixes
+- Upgrade Progress Fix
+    - hooks/HUpgradeProgressFix.cpp
+    - section/UpgradeProgressFix.cpp
 - Allows to use 4GB on x64
     - hooks/HFix4GB.cpp
 - Reduce call sim beat of UI

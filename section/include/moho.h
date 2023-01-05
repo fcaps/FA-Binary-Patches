@@ -773,8 +773,12 @@ struct Unit : WeakObject
 	// at 0x294
 	float FuelRatio;
 	float ShieldRatio; // Readonly
+	// at 0x2A0
+	bool Paused;
 	// at 0x2AC
 	float WorkProgress;
+	// at 0x2CC
+	string customUnitName;
 	// at 0x380
 	UserUnitWeapon* Weapons;
 	list<unk_t> unk22; // Weapons?
@@ -830,6 +834,10 @@ struct UserUnit : UserEntity
 	// at 0x44
 	int UnitID;
 	RUnitBlueprint *blueprint;
+	// at 0x1B0
+	bool Paused;
+	// at 0x1BC
+	float WorkProgress;
 	// at 0x1DC
 	string customUnitName;
 	// at 0x290
