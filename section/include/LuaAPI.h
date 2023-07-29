@@ -238,8 +238,8 @@ VALIDATE_SIZE(TObject, 8)
       LuaObject Lookup(const char* key) {
         return ((__thiscall LuaObject (*)(LuaObject*, const char*))0x9093b0)(this, key);
       }
-      LuaStackObject* PushStack(LuaState* state) {
-        return ((__thiscall LuaStackObject* (*)(LuaObject*, LuaState*))0x907d80)(this, state);
+      LuaStackObject PushStack(LuaState* state) {
+        return ((__thiscall LuaStackObject (*)(LuaObject*, LuaState*))0x907d80)(this, state);
       }
       void PushStack(lua_State* L) {
         ((__thiscall void (*)(LuaObject*, lua_State*))0x907d10)(this, L);
