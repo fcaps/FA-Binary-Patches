@@ -65,6 +65,9 @@ This are just the patch files for this game. I decided to separate them from pat
     - hooks/WayPointArrive.cpp
 - Improvements to lua messages
     - hooks/LuaMessages.cpp
+- Stops reclaim if unit is paused (similar to 'build', 'assist' etc.)
+    - hooks/StopReclaimWhenPaused.cpp
+    - section/StopReclaimWhenPaused.cpp
 
 ## Additions
 - Adds the commandType, position, targetId and blueprintId to sim unit:GetCommandQueue
