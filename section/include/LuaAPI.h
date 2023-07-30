@@ -179,10 +179,14 @@ VALIDATE_SIZE(TObject, 8)
         return ((__thiscall LuaObject* (*)(LuaObject*, const LuaStackObject*))0x908b00)(this, stack);
       }
       LuaObject operator[](int key) {
-        return ((__thiscall LuaObject (*)(LuaObject*, int))0x9091e0)(this, key);
+        LuaObject out;
+        ((__thiscall void (*)(LuaObject*, LuaObject*, int))0x9091e0)(this, &out, key);
+        return out;
       }
       LuaObject operator[](const char* key) {
-        return ((__thiscall LuaObject (*)(LuaObject*, const char*))0x908f60)(this, key);
+        LuaObject out;
+        ((__thiscall void (*)(LuaObject*, LuaObject*, const char*))0x908f60)(this, &out, key);
+        return out;
       }
       bool GetBoolean() {
         return ((__thiscall bool (*)(LuaObject*))0x907c90)(this);
@@ -214,32 +218,32 @@ VALIDATE_SIZE(TObject, 8)
       bool IsUserData() {
         return ((__thiscall bool (*)(LuaObject*))0x907320)(this);
       }
-      LuaObject Clone() {
-        return ((__thiscall LuaObject (*)(LuaObject*))0x90a180)(this);
+      void Clone(LuaObject* out) {
+        ((__thiscall void (*)(LuaObject*,  LuaObject*))0x90a180)(this, out);
       }
-      LuaObject CreateTable(const char* key, int narray, int lnhash) {
-        return ((__thiscall LuaObject (*)(LuaObject*, const char*, int, int))0x908c10)(this, key, narray, lnhash);
+      void CreateTable(LuaObject* out, const char* key, int narray, int lnhash) {
+        ((__thiscall void (*)(LuaObject*, LuaObject*, const char*, int, int))0x908c10)(this, out, key, narray, lnhash);
       }
-      LuaObject CreateTable(int key, int narray, int lnhash) {
-        return ((__thiscall LuaObject (*)(LuaObject*, int, int, int))0x908ca0)(this, key, narray, lnhash);
+      void CreateTable(LuaObject* out, int key, int narray, int lnhash) {
+        ((__thiscall void (*)(LuaObject*, LuaObject*, int, int, int))0x908ca0)(this, out, key, narray, lnhash);
       }
-      LuaObject GetByIndex(int index) {
-        return ((__thiscall LuaObject (*)(LuaObject*, int))0x908df0)(this, index);
+      void GetByIndex(LuaObject* out, int index) {
+        ((__thiscall void (*)(LuaObject*, LuaObject*, int))0x908df0)(this, out, index);
       }
-      LuaObject GetByName(const char* name) {
-        return ((__thiscall LuaObject (*)(LuaObject*, const char*))0x90a160)(this, name);
+      void GetByName(LuaObject* out, const char* name) {
+        ((__thiscall void (*)(LuaObject*, LuaObject*, const char*))0x90a160)(this, out, name);
       }
-      LuaObject GetByObject(const LuaObject* obj) {
-        return ((__thiscall LuaObject (*)(LuaObject*, const LuaObject*))0x908e70)(this, obj);
+      void GetByObject(LuaObject* out, const LuaObject* obj) {
+        ((__thiscall void (*)(LuaObject*, LuaObject*, const LuaObject*))0x908e70)(this, out, obj);
       }
-      LuaObject GetMetaTable() {
-        return ((__thiscall LuaObject (*)(LuaObject*))0x908ba0)(this);
+      void GetMetaTable(LuaObject* out) {
+        ((__thiscall void (*)(LuaObject*, LuaObject*))0x908ba0)(this, out);
       }
-      LuaObject Lookup(const char* key) {
-        return ((__thiscall LuaObject (*)(LuaObject*, const char*))0x9093b0)(this, key);
+      void Lookup(LuaObject* out, const char* key) {
+        ((__thiscall void (*)(LuaObject*, LuaObject*, const char*))0x9093b0)(this, out, key);
       }
-      LuaStackObject PushStack(LuaState* state) {
-        return ((__thiscall LuaStackObject (*)(LuaObject*, LuaState*))0x907d80)(this, state);
+      void PushStack(LuaStackObject* out, LuaState* state) {
+        ((__thiscall void (*)(LuaObject*, LuaStackObject*, LuaState*))0x907d80)(this, out, state);
       }
       void PushStack(lua_State* L) {
         ((__thiscall void (*)(LuaObject*, lua_State*))0x907d10)(this, L);
@@ -265,14 +269,14 @@ VALIDATE_SIZE(TObject, 8)
       lua_Number ToNumber() {
         return ((__thiscall float (*)(LuaObject*))0x9073b0)(this);
       }
-      RRef AssignNewUserData(LuaState* state, const RRef* rRef) {
-        return ((__thiscall RRef (*)(LuaObject*, LuaState*, const RRef*))0x909840)(this, state, rRef);
+      void AssignNewUserData(RRef* out, LuaState* state, const RRef* rRef) {
+        ((__thiscall void (*)(LuaObject*, RRef*, LuaState*, const RRef*))0x909840)(this, out, state, rRef);
       }
-      RRef AssignNewUserData(LuaState* state, const RType* rType) {
-        return ((__thiscall RRef (*)(LuaObject*, LuaState*, const RType*))0x9097d0)(this, state, rType);
+      void AssignNewUserData(RRef* out, LuaState* state, const RType* rType) {
+        ((__thiscall void (*)(LuaObject*, RRef*, LuaState*, const RType*))0x9097d0)(this, out, state, rType);
       }
-      RRef GetUserData() {
-        return ((__thiscall RRef (*)(LuaObject*))0x907bc0)(this);
+      void GetUserData(RRef* out) {
+        ((__thiscall void (*)(LuaObject*, RRef*))0x907bc0)(this, out);
       }
       int GetCount() {
         return ((__thiscall int (*)(LuaObject*))0x907f50)(this);
@@ -415,11 +419,11 @@ VALIDATE_SIZE(TObject, 8)
       ~LuaState() {
         ((__thiscall void (*)(LuaState*))0x90a600)(this);
       }
-      LuaObject GetGlobal(const char* key) {
-        return ((__thiscall LuaObject (*)(LuaState*, const char*))0x4579d0)(this, key);
+      void GetGlobal(LuaObject* out, const char* key) {
+        ((__thiscall void (*)(LuaState*, LuaObject*, const char*))0x4579d0)(this, out, key);
       }
-      LuaObject GetGlobals() {
-        return ((__thiscall LuaObject (*)(LuaState*))0x90a690)(this);
+      void GetGlobals(LuaObject* out) {
+        ((__thiscall void (*)(LuaState*, LuaObject*))0x90a690)(this, out);
       }
       LuaState* GetActiveState() {
         return ((__thiscall LuaState* (*)(LuaState*))0x90bee0)(this);
