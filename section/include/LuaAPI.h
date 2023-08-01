@@ -380,9 +380,6 @@ VALIDATE_SIZE(TObject, 8)
       void TypeError(const char* msg) {
         ((__thiscall void (*)(LuaObject*, const char*))0x9072d0)(this, msg);
       }
-      int Error(const char* fmt, ...) {
-        return ((__cdecl int (*)(LuaObject*, const char*, ...))0x90c1d0)(this, fmt, (uintptr_t*)fmt + 1);
-      }
 
     //private
       void AddToUsedList(LuaState* state) {
@@ -433,6 +430,9 @@ VALIDATE_SIZE(TObject, 8)
       }
       int ArgError(int narg, const char* msg) {
         return ((__thiscall int (*)(LuaState*, int, const char*))0x90bf70)(this, narg, msg);
+      }
+      __attribute__((noinline)) __cdecl int Error(const char* fmt, ...) {
+        asm("jmp 0x90c1d0;");
       }
       lua_State* GetActiveCState() {
         return ((__thiscall lua_State* (*)(LuaState*))0x90bef0)(this);
