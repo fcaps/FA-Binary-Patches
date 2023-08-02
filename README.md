@@ -10,6 +10,8 @@ This are just the patch files for this game. I decided to separate them from pat
 
 # Change List
 ## Fixes
+- Fix args num check in UserUnit:GetCustomName
+    - hooks/UserUnitGetCustomNameFix.cpp
 - Fix `ForkThread` function. Allow only lua function to be passed as first argument.
     - hooks/ForkThreadFix.cpp
     - section/ForkThreadFix.cpp
