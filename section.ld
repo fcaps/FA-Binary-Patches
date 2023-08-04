@@ -14,5 +14,6 @@ SECTIONS {
     *(.eh_frame*)
     *(.ctors)
     *(.reloc)
+    *(.idata*)
   }
 }
