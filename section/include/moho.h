@@ -469,49 +469,83 @@ struct SimArmyEconomyInfo
 	float unk7;
 };
 
-struct UserArmy
-{	// 0x210 bytes
+struct BaseArmy
+{	// 0x1DC bytes
+	// struct 0x80 bytes
 	int armyIndex;
 	string name;
 	string nickname;
 	bool isCivilian;
+	uint8_t pad1[3];
+	uint8_t unk1[0x40];
 	// at 0x80
+	// struct 0x15C bytes
 	float storedEnergy;
 	float storedMass;
-
-	float incomeEnergy;     // div 10
-	float incomeMass;       // div 10
+	float incomeEnergy;    // div 10
+	float incomeMass;      // div 10
 	float reclaimedEnergy;
 	float reclaimedMass;
-
-	float requestedEnergy;  // div 10
-	float requestedMass;    // div 10
-	float expenseEnergy;    // div 10
-	float expenseMass;      // div 10
-
+	float requestedEnergy; // div 10
+	float requestedMass;   // div 10
+	float expenseEnergy;   // div 10
+	float expenseMass;     // div 10
+	// at 0xA8
 	uint32_t maxEnergy;
-	int unk1; // =0
-	uint32_t maxMass;
 	int unk2; // =0
+	uint32_t maxMass;
+	int unk3; // =0
 	bool isResourceSharing;
-
-	// at 0x128
+	uint8_t pad2[7];
+	// at 0xC0
+	moho_set neutrals;
+	moho_set allies;
+	moho_set enemies;
+	// at 0x120
+	bool IsAlly;
+	uint8_t pad3[7];
 	moho_set mValidCommandSources;
-	// at 0x148
 	uint32_t color;
 	uint32_t iconColor;
 	string mArmyType; // 'human' for players
 	// at 0x16C
 	int faction;
-	// at 0x188
+	bool unk4;
+	uint8_t pad4[7];
+	uint32_t unk5[4];
 	bool showScore;
+	uint8_t pad5[7];
+	uint32_t unk6;
+	uint32_t pad6;
+	uint32_t unk7;
+	uint32_t pad7;
+	uint32_t unk8[6];
 	// at 0x1B8
 	bool outOfGame;
+	uint8_t pad8[3];
+	Vector2f StartPosition;
+	uint32_t unk9;
+	float noRushRadius;
+	float noRushOffsetX;
+	float noRushOffsetY;
+	float unk10;
+	float unk11;
 };
+VALIDATE_SIZE(BaseArmy, 0x1DC);
+
+struct UserArmy : BaseArmy
+{	// 0x210 bytes
+	// at 0x1DC
+	uint8_t unk12[8];
+	// at 0x1E4
+	CWldSession *session;
+	uint8_t unk13[0x28];
+};
+VALIDATE_SIZE(UserArmy, 0x210);
 
 struct Sim;
 
-struct SimArmy // : IArmy
+struct SimArmy // : IArmy, BaseArmy
 {//0x006FD332, 0x288 bytes
 	void *vtable;
 	// at 0xA4 in vtable
@@ -519,6 +553,7 @@ struct SimArmy // : IArmy
 	//SetUnitCap;
 
 	void *unk1;
+	// at 0x8, BaseArmy
 	int armyIndex;
 	string name;
 	string nickname;
