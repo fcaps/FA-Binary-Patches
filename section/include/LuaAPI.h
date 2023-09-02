@@ -85,13 +85,15 @@ typedef struct luaL_reg {
 
 #define lua_pushcfunction(L,f)  lua_pushcclosure(L, f, 0)
 
-#define lua_isfunction(L,n)     (lua_type(L,n) == LUA_TFUNCTION)
-#define lua_istable(L,n)        (lua_type(L,n) == LUA_TTABLE)
-#define lua_islightuserdata(L,n)(lua_type(L,n) == LUA_TLIGHTUSERDATA)
+#define lua_isnoneornil(L,n)    (lua_type(L,n) <= 0)
+#define lua_isnone(L,n)         (lua_type(L,n) == LUA_TNONE)
 #define lua_isnil(L,n)          (lua_type(L,n) == LUA_TNIL)
 #define lua_isboolean(L,n)      (lua_type(L,n) == LUA_TBOOLEAN)
-#define lua_isnone(L,n)         (lua_type(L,n) == LUA_TNONE)
-#define lua_isnoneornil(L, n)   (lua_type(L,n) <= 0)
+#define lua_islightuserdata(L,n)(lua_type(L,n) == LUA_TLIGHTUSERDATA)
+#define lua_istable(L,n)        (lua_type(L,n) == LUA_TTABLE)
+#define lua_isfunction(L,n)     (lua_type(L,n) == LUA_TFUNCTION)
+#define lua_isuserdata(L,n)     (lua_type(L,n) == LUA_TUSERDATA)
+#define lua_isthread(L,n)       (lua_type(L,n) == LUA_TTHREAD)
 
 #define lua_pushliteral(L, s) \
   lua_pushlstring(L, "" s, (sizeof(s)/sizeof(char))-1)
