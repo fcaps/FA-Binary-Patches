@@ -5,6 +5,18 @@
 typedef int BOOL;
 typedef int unk_t;
 
+struct luaFuncDescReg
+{	// 0x1C bytes
+	void **RegisterFunc;  // call for register lua function. 0x00E45E90 is std func
+	char *FuncName;       // lua name function
+	char *ClassName;      // lua class name. 0x00E00D90 - <global> if none
+	char *FuncDesc;       // for log
+	luaFuncDescReg *Next; // reg func of chain
+	void *FuncPtr;        // code address
+	void *ClassPtr;       // C++ class type address. NULL if class none
+};
+VALIDATE_SIZE(luaFuncDescReg, 0x1C)
+
 // Probably from visual c++ 9
 struct vtable;
 struct typeInfo

@@ -20,3 +20,13 @@ int SetInvertMidMouseButton(lua_State *L)
 
     return 0;
 }
+
+//PatcherList_UIFuncRegs_USIMMBRegDesc
+luaFuncDescReg USIMMBRegDesc = {
+    0x00E45E90,
+    "SetInvertMidMouseButton",
+    0x00E00D90,
+    "(bool)",
+    0x00000000,
+    SetInvertMidMouseButton,
+    0x00000000};

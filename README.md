@@ -6,8 +6,6 @@ To apply them build or get the patcher itself from here
 
 https://github.com/FAForever/FA_Patcher
 
-This are just the patch files for this game. I decided to separate them from patcher source code.
-
 # Change List
 ## Signature patches
 - See `SigPatches.txt`
@@ -103,6 +101,9 @@ This are just the patch files for this game. I decided to separate them from pat
     - section/MinimapMesh.cpp
 - Allow players to double-click to select Walls
     - hooks/WallSelection.cpp
+- Adds registrators for Sim and UI Lua funcs.
+    - hooks/LuaFuncRegs.cpp
+    - section/LuaFuncRegs.cpp
 - Adds GetTimeForProfile to Sim and UI. Allows to deal with the loss of accuracy
     - section/GetTimeForProfile.cpp
     - section/LuaFuncRegs.cpp
@@ -118,9 +119,7 @@ This are just the patch files for this game. I decided to separate them from pat
 - Make `LOWSELECTPRIO` apply to units under construction
     - hooks/selectionPriority.cpp
     - section/selectionPriority.cpp
-- Adds GetDepositsAroundPoint to Sim and UI & Entry point to ui functions queue
-  Allow the getting of Mass or Energy spots around a location
-    - hooks/UserGetDepositsAroundPoint.cpp
+- Adds GetDepositsAroundPoint to Sim and UI
     - section/SimGetDepositsAroundPoint.cpp
     - section/LuaFuncRegs.cpp
 - Adds SetInvertMidMouseButton to UI
@@ -132,13 +131,12 @@ This are just the patch files for this game. I decided to separate them from pat
     - section/SimSetCommandSource.cpp
     - section/LuaFuncRegs.cpp
 - Adds GetMouseWorldPos to Sim
+    - section/SimGetMouseWorldPos.cpp
     - section/LuaFuncRegs.cpp
 - Adds SessionIsReplay to Sim
     - section/SimIsReplay.cpp
     - section/LuaFuncRegs.cpp
 - Adds SetFocusArmy to Sim. Sets focus without restrictions
-  Entry point to sim functions queue
-    - hooks/SimSetFocusArmy.cpp
     - section/SimSetFocusArmy.cpp
     - section/LuaFuncRegs.cpp
 - Allow upgrades to be queued on units under construction
