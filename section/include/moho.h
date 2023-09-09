@@ -136,8 +136,8 @@ struct RObject
 
 template <int T, int TInfo>
 struct ObjectType {
-    const static int Type = T;
-    const static int Info = TInfo;
+	const static int Type = T;
+	const static int Info = TInfo;
 };
 
 struct CScriptObject : RObject
