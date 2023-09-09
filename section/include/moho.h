@@ -134,6 +134,12 @@ struct RObject
 	void *vtable;
 };
 
+template <int T, int TInfo>
+struct ObjectType {
+    const static int Type = T;
+    const static int Info = TInfo;
+};
+
 struct CScriptObject : RObject
 {//0x004C6F8A, 0x3C bytes
 };
@@ -196,12 +202,14 @@ struct Camera // : RCamCamera
 
 struct CMauiControl : CScriptObject
 {//0x004C6F8A, 0x11C bytes
+	using Type = ObjectType<0x10C7700, 0xF83314>;
 };
 
 struct CWldSession;
 
 struct CUIWorldView : CMauiControl
 {//0x004C6F8A, 0x2A8 bytes
+	using Type = ObjectType<0x10C77E4, 0xF8A71C>;
 	// at 0x120
 	Camera *camera;
 	// at 0x208
@@ -884,6 +892,7 @@ struct UserEntity : WeakObject
 
 struct UserUnit : UserEntity
 {//0x008B8601, 0x3E8 bytes
+	using Type = ObjectType<0x10C77AC, 0xF881E0>;
 	// at 0x44
 	uint32_t UnitID;
 	RUnitBlueprint *blueprint;
@@ -895,6 +904,16 @@ struct UserUnit : UserEntity
 	string customUnitName;
 	// at 0x290
 	UserUnitWeapon *weapons;
+};
+
+struct CPlatoon : public CScriptObject
+{
+    using Type = ObjectType<0x10C6FCC, 0xF6A1FC>;
+};
+
+struct CMauiBitmap : public CMauiControl
+{
+    using Type = ObjectType<0x10C7704, 0xF832F4>;
 };
 
 struct ReconBlip : Entity
