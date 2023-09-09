@@ -2,31 +2,31 @@
 #include <type_traits>
 #include "moho.h"
 
-struct SimRegisterFunction : luaFuncDescReg
+struct SimRegFunc : luaFuncDescReg
 {
-    constexpr SimRegisterFunction(const char *name, const char *desc,
+    constexpr SimRegFunc(const char *name, const char *desc,
         lua_CFunction f, const char *className = 0xE00D90, void *classPtr = nullptr) :
-        luaFuncDescReg{0xE45E90, name, className, desc, *reinterpret_cast<luaFuncDescReg **>(0xF5A124), f, classPtr}
+        luaFuncDescReg{0xE45E90, name, className, desc, *reinterpret_cast<luaFuncDescReg**>(0xF5A124), f, classPtr}
     {
-        *reinterpret_cast<luaFuncDescReg **>(0xF5A124) = this;
+        *reinterpret_cast<luaFuncDescReg**>(0xF5A124) = this;
     }
-    constexpr SimRegisterFunction(luaFuncDescReg &srf) :
-        SimRegisterFunction(srf.FuncName, srf.FuncDesc, srf.FuncPtr, srf.ClassPtr, srf.ClassPtr) {}
+    constexpr SimRegFunc(luaFuncDescReg &srf) :
+        SimRegFunc(srf.FuncName, srf.FuncDesc, srf.FuncPtr, srf.ClassPtr, srf.ClassPtr) {}
 };
-struct UIRegisterFunction : luaFuncDescReg
+struct UIRegFunc : luaFuncDescReg
 {
-    constexpr UIRegisterFunction(const char *name, const char *desc,
+    constexpr UIRegFunc(const char *name, const char *desc,
         lua_CFunction f, const char *className = 0xE00D90, void *classPtr = nullptr) :
-        luaFuncDescReg{0xE45E90, name, className, desc, *reinterpret_cast<luaFuncDescReg **>(0xF59690), f, classPtr}
+        luaFuncDescReg{0xE45E90, name, className, desc, *reinterpret_cast<luaFuncDescReg**>(0xF59690), f, classPtr}
     {
-        *reinterpret_cast<luaFuncDescReg **>(0xF59690) = this;
+        *reinterpret_cast<luaFuncDescReg**>(0xF59690) = this;
     }
 
-    constexpr UIRegisterFunction(luaFuncDescReg &srf) :
-        UIRegisterFunction(srf.FuncName, srf.FuncDesc, srf.FuncPtr, srf.ClassName, srf.ClassPtr) {}
+    constexpr UIRegFunc(luaFuncDescReg &srf) :
+        UIRegFunc(srf.FuncName, srf.FuncDesc, srf.FuncPtr, srf.ClassName, srf.ClassPtr) {}
 };
 
-using TConFunction = void(vector<string>*);
+using TConFunc = void(vector<string>*);
 template <typename T>
 class ConDescReg
 {
@@ -52,10 +52,13 @@ public:
             vftable = 0xE017A8; // Moho::TConVar<float>::`vftable'
         else if constexpr (std::is_same_v<T, string>)
             vftable = 0xE017B0; // Moho::TConVar<std::string>::`vftable'
-        else if constexpr (std::is_same_v<T, TConFunction>)
+        else if constexpr (std::is_same_v<T, TConFunc>)
             vftable = 0xE01708; // Moho::CConFunc::`vftable'
         else
             static_assert(!std::is_same_v<T, T>, "Not supported type!");
     }
 };
-VALIDATE_SIZE(ConDescReg<TConFunction>, 0x10)
+VALIDATE_SIZE(ConDescReg<TConFunc>, 0x10)
+
+//int v;
+//ConDescReg myConIntV{"name", "desc", &v};
