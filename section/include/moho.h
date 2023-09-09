@@ -908,12 +908,12 @@ struct UserUnit : UserEntity
 
 struct CPlatoon : public CScriptObject
 {
-    using Type = ObjectType<0x10C6FCC, 0xF6A1FC>;
+	using Type = ObjectType<0x10C6FCC, 0xF6A1FC>;
 };
 
 struct CMauiBitmap : public CMauiControl
 {
-    using Type = ObjectType<0x10C7704, 0xF832F4>;
+	using Type = ObjectType<0x10C7704, 0xF832F4>;
 };
 
 struct ReconBlip : Entity
