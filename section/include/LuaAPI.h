@@ -54,9 +54,12 @@ typedef struct luaL_reg {
 #define LUA_TNUMBER		3
 #define LUA_TSTRING		4
 #define LUA_TTABLE		5
-#define LUA_TFUNCTION		6
-#define LUA_TUSERDATA		7
-#define LUA_TTHREAD		8
+#define LUA_CFUNCTION		6
+#define LUA_TFUNCTION		7
+#define LUA_TUSERDATA		8
+#define LUA_TTHREAD		9
+#define LUA_TCODE		10
+#define LUA_TUPVALUE		11
 
 #define LUA_HOOKCALL	0
 #define LUA_HOOKRET	1
@@ -91,9 +94,12 @@ typedef struct luaL_reg {
 #define lua_isboolean(L,n)      (lua_type(L,n) == LUA_TBOOLEAN)
 #define lua_islightuserdata(L,n)(lua_type(L,n) == LUA_TLIGHTUSERDATA)
 #define lua_istable(L,n)        (lua_type(L,n) == LUA_TTABLE)
+#define lua_iscfunction(L,n)    (lua_type(L,n) == LUA_CFUNCTION)
 #define lua_isfunction(L,n)     (lua_type(L,n) == LUA_TFUNCTION)
 #define lua_isuserdata(L,n)     (lua_type(L,n) == LUA_TUSERDATA)
 #define lua_isthread(L,n)       (lua_type(L,n) == LUA_TTHREAD)
+#define lua_iscode(L,n)         (lua_type(L,n) == LUA_TCODE)
+#define lua_isupvalue(L,n)      (lua_type(L,n) == LUA_TUPVALUE)
 
 #define lua_pushliteral(L, s) \
   lua_pushlstring(L, "" s, (sizeof(s)/sizeof(char))-1)
@@ -119,20 +125,6 @@ typedef union {
 typedef struct {
   int tt;
   Value value;
-
-  /* Types:
-   -1 - None
-    0 - Nil
-    1 - Boolean
-    2 - LightUserData
-    3 - Number
-    4 - String
-    5 - Table
-    6 - CFunction
-    7 - Function
-    8 - UserData
-    9 - Thread
-  */
 } TObject;
 VALIDATE_SIZE(TObject, 8)
 
