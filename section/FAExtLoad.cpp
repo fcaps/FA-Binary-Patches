@@ -97,7 +97,7 @@ FuncDesc Funcs[] = {
     {"?ToString@LuaObject@@QAEPBDXZ", 0x9073e0},
     {"?Type@LuaObject@@QBEHXZ", 0x9076d0},
     {"?TypeError@LuaObject@@QBEXPBD@Z", 0x9072d0},
-    {"", 0x908b50},
+    {"?TypeName@LuaObject@@QBEPBDXZ", 0x908b50},
     {"", 0x90e2a0},
     {"", 0x90e300},
     {"", 0x90e370},
@@ -106,7 +106,7 @@ FuncDesc Funcs[] = {
     {"", 0x90dda0},
     {"", 0x90ea70},
     {"luaL_checklstring", 0x90eaa0},
-    {"", 0x90eb70},
+    {"luaL_checknumber", 0x90eb70},
     {"", 0x90dd10},
     {"", 0x90ea20},
     {"luaL_error", 0x90dbf0},
@@ -160,7 +160,7 @@ FuncDesc Funcs[] = {
     {"", 0x9246d0},
     {"lua_pcallF", 0x90d430},
     {"lua_pushboolean", 0x90cf80},
-    {"", 0x90ced0},
+    {"lua_pushcclosure", 0x90ced0},
     {"", 0x90ce90},
     {"", 0x90cfc0},
     {"lua_pushlstring", 0x90cd80},
@@ -197,8 +197,8 @@ FuncDesc Funcs[] = {
     {"lua_tostring", 0x90ca90},
     {"lua_tothread", 0x90cc50},
     {"", 0x90cbb0},
-    {"", 0x911ea0},
-    {"lua_type", 0x90c740},
+    {"lua_traceback", 0x911ea0},
+    {"lua_typeF", 0x90c740},
     {"", 0x90c780},
     {"", 0x90c4c0},
     {"lua_yield", 0x913e40},
@@ -235,11 +235,11 @@ void FAExtLoad()
         //}
     }
     asm(
-        "ADD ESP,0x3C \n"
-        "POP EBX \n"
-        "POP ESI \n"
-        "POP EDI \n"
-        "POP EBP \n"
-        "JMP 0xA8ED7E \n"
+        "ADD ESP,0x3C;"
+        "POP EBX;"
+        "POP ESI;"
+        "POP EDI;"
+        "POP EBP;"
+        "JMP 0xA8ED7E;"
     );
 }

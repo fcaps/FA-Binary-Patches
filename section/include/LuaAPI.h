@@ -58,7 +58,7 @@ typedef struct luaL_reg {
 #define LUA_TFUNCTION		7
 #define LUA_TUSERDATA		8
 #define LUA_TTHREAD		9
-#define LUA_TCODE		10
+#define LUA_TPROTO		10
 #define LUA_TUPVALUE		11
 
 #define LUA_HOOKCALL	0
@@ -98,7 +98,7 @@ typedef struct luaL_reg {
 #define lua_isfunction(L,n)     (lua_type(L,n) == LUA_TFUNCTION)
 #define lua_isuserdata(L,n)     (lua_type(L,n) == LUA_TUSERDATA)
 #define lua_isthread(L,n)       (lua_type(L,n) == LUA_TTHREAD)
-#define lua_iscode(L,n)         (lua_type(L,n) == LUA_TCODE)
+#define lua_isproto(L,n)        (lua_type(L,n) == LUA_TPROTO)
 #define lua_isupvalue(L,n)      (lua_type(L,n) == LUA_TUPVALUE)
 
 #define lua_pushliteral(L, s) \
