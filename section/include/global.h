@@ -41,32 +41,42 @@
 #define s_FACTORY			GDecl(0xE19824, const char*)
 #define s_EXPERIMENTAL			GDecl(0xE204B8, const char*)
 #define s_global			GDecl(0xE00D90, const char*) // "<global>"
+#define s_ExpectedButGot		GDecl(0xE0A220, const char*) // "%s\n  expected %d args, but got %d"
+#define s_ExpectedBetweenButGot		GDecl(0xE0A270, const char*) // "%s\n  expected between %d and %d args, but got %d"
+#define s_Global			GDecl(0xE00D90, const char*) // "<global>"
+#define s_CMauiBitmap			GDecl(0xE37438, const char*) // "CMauiBitmap"
+#define s_UserUnit			GDecl(0xE4D090, const char*) // "UserUnit"
+#define s_ExpectedAGameObject		GDecl(0xE09860, const char*) // "Expected a game object. (Did you call with '.' instead of ':'?)"
+#define s_GameObjectHasBeenDestroyed	GDecl(0xE098A0, const char*) // "Game object has been destroyed"
+#define s_IncorrectTypeOfGameObject	GDecl(0xE098C0, const char*) // "Incorrect type of game object.  (Did you call with '.' instead of ':'?)"
+#define s_UnknownColor			GDecl(0x4B2D54, const char*) // "Unknown color: %s"
+#define s_c_object			GDecl(0xE016DC, const char*) // "_c_object"
 
 #define g_ExeVersion1			GDecl(0x876666, const int)
 #define g_ExeVersion2			GDecl(0x87612d, const int)
 #define g_ExeVersion3			GDecl(0x4d3d40, const int)
 
-FDecl(0x9C4940, AbortF,		void (*)(wchar_t *fmt, ...))
-FDecl(0x937CB0, LogF,		int (*)(const char *fmt, ...))
-FDecl(0x937D30, WarningF,	int (*)(const char *fmt, ...))
-FDecl(0x937C30, SpewF,		int (*)(const char *fmt, ...))
-FDecl(0x41C990, ConsoleLogF,	int (*)(const char *fmt, ...))
-FDecl(0xA9B4E6, FileWrite,	int (*)(int fileIndex, const char *str, int strlen)) //index 3 is log.
-FDecl(0xA825B9, shi_new,	void* (*)(size_t size))
-FDecl(0x957B00, FArealloc,	void* (*)(void *ptr, size_t new_size))
-FDecl(0x958B20, FAmalloc,	void* (*)(size_t size))
-FDecl(0x958C40, FAfree,		void (*)(void *ptr))
-FDecl(0x957EA0, FAmsize,	size_t (*)(void *memblock))
-FDecl(0x957AB0, FAcalloc,	void* (*)(size_t num, size_t size))
-FDecl(0xA89110, FAmemset,	void* (*)(void *dest, int ch, size_t count))
-FDecl(0xA89190, FAmemcpy,	void* (*)(void *dest, const void *src, size_t count))
-FDecl(0x452FC0, FAsqrtf,	float (*)(float arg))
-FDecl(0xA94450, FAstrlen,	size_t (*)(const char *str))
-FDecl(0xAA549E, FAstrcmp,	int (*)(const char *str1, const char *str2))
-FDecl(0xA82F32, FAsprintf_s,	int (*)(char *Buffer, size_t BufferCount, const char *Format, ...))
+void AbortF(wchar_t *fmt, ...) asm("0x9C4940");
+int LogF(const char *fmt, ...) asm("0x937CB0");
+int WarningF(const char *fmt, ...) asm("0x937D30");
+int SpewF(const char *fmt, ...) asm("0x937C30");
+int ConsoleLogF(const char *fmt, ...) asm("0x41C990");
+int FileWrite(int fileIndex, const char *str, int strlen) asm("0xA9B4E6"); //index 3 is log.
+void* shi_new(size_t size) asm("0xA825B9");
+void* FArealloc(void *ptr, size_t new_size) asm("0x957B00");
+void* FAmalloc(size_t size) asm("0x958B20");
+void FAfree(void *ptr) asm("0x958C40");
+size_t FAmsize(void *memblock) asm("0x957EA0");
+void* FAcalloc(size_t num, size_t size) asm("0x957AB0");
+void* FAmemset(void *dest, int ch, size_t count) asm("0xA89110");
+void* FAmemcpy(void *dest, const void *src, size_t count) asm("0xA89190");
+float FAsqrtf(float arg) asm("0x452FC0");
+size_t FAstrlen(const char *str) asm("0xA94450");
+int FAstrcmp(const char *str1, const char *str2) asm("0xAA549E");
+int FAsprintf_s(char *Buffer, size_t BufferCount, const char *Format, ...) asm("0xA82F32");
 
-FDecl(0x405550, InitString,	__thiscall void (*)(void *this_, const char *str))
-FDecl(0x4059E0, AssignString,	__thiscall void (*)(void *this_, const char *str, size_t size))
+__thiscall void InitString(void *this_, const char *str) asm("0x405550");
+__thiscall void AssignString(void *this_, const char *str, size_t size) asm("0x4059E0");
 
 #define GetModuleHandle   WDecl(0xC0F378, __stdcall void* (*)(const char *lpLibFileName))
 #define GetProcAddress    WDecl(0xC0F48C, __stdcall void* (*)(void* hModule, const char *lpProcName))
@@ -76,3 +86,15 @@ FDecl(0x4059E0, AssignString,	__thiscall void (*)(void *this_, const char *str, 
 #define QueryPerformanceFrequency WDecl(0xC0F46C, __stdcall bool (*)(int64_t*))
 
 #define DebugLog(_s) LogF("%s", (_s))
+
+template <typename T>
+struct Result
+{
+    T *object = nullptr;
+    const char *reason = nullptr;
+
+    constexpr static Result<T> Fail(const char *reason) { return {nullptr, reason}; }
+    constexpr static Result<T> Success(void *data) { return {(T *)data, nullptr}; }
+
+    inline bool IsFail() { return reason != nullptr; }
+};
