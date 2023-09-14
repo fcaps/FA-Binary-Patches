@@ -6,14 +6,11 @@
 #define GPtr(addr, type) \
   (*(type*)addr)
 
-#define GDecl(addr, type) \
-  ((type)addr)
+#define GDecl(name, addr, type) \
+  extern type name asm(#addr);
 
 #define WDecl(addr, type) \
   ((type)*(uintptr_t*)addr)
-
-#define FDecl(addr, name, type) \
-  const auto name = (type)addr;
 
 #define VALIDATE_SIZE(struc, size) \
   static_assert(sizeof(struc) == size, "Invalid structure size of " #struc);
@@ -30,34 +27,33 @@
 #define g_ConsoleLuaState		GPtr(0x10A6478, LuaState*)
 #define g_Device			GPtr(0x0F8E284, Device*)
 
-#define ui_ProgressBarColor		GDecl(0x0F57BB8, int)
-#define ui_SelectTolerance		GDecl(0x0F57A90, float)
-#define ui_ExtractSnapTolerance		GDecl(0x0F57A94, float)
-#define ui_DisableCursorFixing		GDecl(0x10A6464, bool)
-#define ui_RenderIcons			GDecl(0x0F57B27, bool)
-#define range_RenderSelected		GDecl(0x10A640A, bool)
-#define range_RenderHighlighted		GDecl(0x10A640B, bool)
-#define range_RenderBuild		GDecl(0x10A6414, bool)
-#define d3d_WindowsCursor		GDecl(0x10A636E, bool)
-#define debugSelect			GDecl(0x10A645E, bool)
+GDecl(ui_ProgressBarColor,		0x0F57BB8, int)
+GDecl(ui_SelectTolerance,		0x0F57A90, float)
+GDecl(ui_ExtractSnapTolerance,		0x0F57A94, float)
+GDecl(ui_DisableCursorFixing,		0x10A6464, bool)
+GDecl(ui_RenderIcons,			0x0F57B27, bool)
+GDecl(range_RenderSelected,		0x10A640A, bool)
+GDecl(range_RenderHighlighted,		0x10A640B, bool)
+GDecl(range_RenderBuild,		0x10A6414, bool)
+GDecl(d3d_WindowsCursor,		0x10A636E, bool)
+GDecl(debugSelect,			0x10A645E, bool)
 
-#define s_FACTORY			GDecl(0xE19824, const char*)
-#define s_EXPERIMENTAL			GDecl(0xE204B8, const char*)
-#define s_global			GDecl(0xE00D90, const char*) // "<global>"
-#define s_ExpectedButGot		GDecl(0xE0A220, const char*) // "%s\n  expected %d args, but got %d"
-#define s_ExpectedBetweenButGot		GDecl(0xE0A270, const char*) // "%s\n  expected between %d and %d args, but got %d"
-#define s_Global			GDecl(0xE00D90, const char*) // "<global>"
-#define s_CMauiBitmap			GDecl(0xE37438, const char*) // "CMauiBitmap"
-#define s_UserUnit			GDecl(0xE4D090, const char*) // "UserUnit"
-#define s_ExpectedAGameObject		GDecl(0xE09860, const char*) // "Expected a game object. (Did you call with '.' instead of ':'?)"
-#define s_GameObjectHasBeenDestroyed	GDecl(0xE098A0, const char*) // "Game object has been destroyed"
-#define s_IncorrectTypeOfGameObject	GDecl(0xE098C0, const char*) // "Incorrect type of game object.  (Did you call with '.' instead of ':'?)"
-#define s_UnknownColor			GDecl(0x4B2D54, const char*) // "Unknown color: %s"
-#define s_c_object			GDecl(0xE016DC, const char*) // "_c_object"
+GDecl(s_FACTORY,			0xE19824, const char*)
+GDecl(s_EXPERIMENTAL,			0xE204B8, const char*)
+GDecl(s_ExpectedButGot,			0xE0A220, const char*) // "%s\n  expected %d args, but got %d"
+GDecl(s_ExpectedBetweenButGot,		0xE0A270, const char*) // "%s\n  expected between %d and %d args, but got %d"
+GDecl(s_Global,				0xE00D90, const char*) // "<global>"
+GDecl(s_CMauiBitmap,			0xE37438, const char*) // "CMauiBitmap"
+GDecl(s_UserUnit,			0xE4D090, const char*) // "UserUnit"
+GDecl(s_ExpectedAGameObject,		0xE09860, const char*) // "Expected a game object. (Did you call with '.' instead of ':'?)"
+GDecl(s_GameObjectHasBeenDestroyed,	0xE098A0, const char*) // "Game object has been destroyed"
+GDecl(s_IncorrectTypeOfGameObject,	0xE098C0, const char*) // "Incorrect type of game object.  (Did you call with '.' instead of ':'?)"
+GDecl(s_UnknownColor,			0x4B2D54, const char*) // "Unknown color: %s"
+GDecl(s_c_object,			0xE016DC, const char*) // "_c_object"
 
-#define g_ExeVersion1			GDecl(0x876666, const int)
-#define g_ExeVersion2			GDecl(0x87612d, const int)
-#define g_ExeVersion3			GDecl(0x4d3d40, const int)
+GDecl(g_ExeVersion1,			0x876666, const int)
+GDecl(g_ExeVersion2,			0x87612d, const int)
+GDecl(g_ExeVersion3,			0x4d3d40, const int)
 
 void AbortF(wchar_t *fmt, ...) asm("0x9C4940");
 int LogF(const char *fmt, ...) asm("0x937CB0");
