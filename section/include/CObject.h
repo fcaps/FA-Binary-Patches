@@ -25,7 +25,8 @@ void *GetCObject(lua_State *l, int index)
     }
     if (lua_isuserdata(l, -1))
     {
-        RRef udata = lua_touserdata(l, -1);
+        RRef udata;
+        lua_touserdata(&udata, l, -1);
         void *sctype = GetCScriptType();
         RRef p = REF_UpcastPtr(&udata, sctype);
         lua_pop(l, 1);
