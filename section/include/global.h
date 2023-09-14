@@ -3,8 +3,11 @@
 #include <cstdint>
 #include "../../workflow.cpp"
 
-#define GDecl(addr, type) \
+#define GPtr(addr, type) \
   (*(type*)addr)
+
+#define GDecl(addr, type) \
+  ((type)addr)
 
 #define WDecl(addr, type) \
   ((type)*(uintptr_t*)addr)
@@ -15,17 +18,17 @@
 #define VALIDATE_SIZE(struc, size) \
   static_assert(sizeof(struc) == size, "Invalid structure size of " #struc);
 
-#define g_CSimDriver			GDecl(0x10C4F50, CSimDriver*)
-#define g_SWldSessionInfo		GDecl(0x10C4F58, SWldSessionInfo*)
-#define g_CWldSession			GDecl(0x10A6470, CWldSession*)
-#define g_Sim				GDecl(0x10A63F0, Sim*)
-#define g_EntityCategoryTypeInfo	GDecl(0x10C6E70, EntityCategoryTypeInfo*)
-#define g_CAiBrainTypeInfo		GDecl(0x10C6FA0, CAiBrainTypeInfo*)
-#define g_CUIManager			GDecl(0x10A6450, CUIManager*)
-#define g_EngineStats			GDecl(0x10A67B8, EngineStats*)
-#define g_WRenViewport			GDecl(0x10C7C28, WRenViewport*)
-#define g_ConsoleLuaState		GDecl(0x10A6478, LuaState*)
-#define g_Device			GDecl(0x0F8E284, Device*)
+#define g_CSimDriver			GPtr(0x10C4F50, CSimDriver*)
+#define g_SWldSessionInfo		GPtr(0x10C4F58, SWldSessionInfo*)
+#define g_CWldSession			GPtr(0x10A6470, CWldSession*)
+#define g_Sim				GPtr(0x10A63F0, Sim*)
+#define g_EntityCategoryTypeInfo	GPtr(0x10C6E70, EntityCategoryTypeInfo*)
+#define g_CAiBrainTypeInfo		GPtr(0x10C6FA0, CAiBrainTypeInfo*)
+#define g_CUIManager			GPtr(0x10A6450, CUIManager*)
+#define g_EngineStats			GPtr(0x10A67B8, EngineStats*)
+#define g_WRenViewport			GPtr(0x10C7C28, WRenViewport*)
+#define g_ConsoleLuaState		GPtr(0x10A6478, LuaState*)
+#define g_Device			GPtr(0x0F8E284, Device*)
 
 #define ui_ProgressBarColor		GDecl(0x0F57BB8, int)
 #define ui_SelectTolerance		GDecl(0x0F57A90, float)
