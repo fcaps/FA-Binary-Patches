@@ -4,7 +4,6 @@ define.h
 patch.ld
 section.cpp
 
-
 // ida files
 *.ida
 *.id0
