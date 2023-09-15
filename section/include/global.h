@@ -61,9 +61,7 @@ int WarningF(const char *fmt, ...) asm("0x937D30");
 int SpewF(const char *fmt, ...) asm("0x937C30");
 int ConsoleLogF(const char *fmt, ...) asm("0x41C990");
 int FileWrite(int fileIndex, const char *str, int strlen) asm("0xA9B4E6"); //index 3 is log.
-
-void* operator new(size_t) asm("0xA825B9");
-void operator delete(void*, size_t) noexcept asm("0x958C40");
+void* shi_new(size_t size) asm("0xA825B9");
 
 extern "C" {
 void* realloc(void *ptr, size_t new_size) asm("0x957B00");
