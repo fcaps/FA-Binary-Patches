@@ -61,18 +61,23 @@ int WarningF(const char *fmt, ...) asm("0x937D30");
 int SpewF(const char *fmt, ...) asm("0x937C30");
 int ConsoleLogF(const char *fmt, ...) asm("0x41C990");
 int FileWrite(int fileIndex, const char *str, int strlen) asm("0xA9B4E6"); //index 3 is log.
-void* shi_new(size_t size) asm("0xA825B9");
-void* FArealloc(void *ptr, size_t new_size) asm("0x957B00");
-void* FAmalloc(size_t size) asm("0x958B20");
-void FAfree(void *ptr) asm("0x958C40");
-size_t FAmsize(void *memblock) asm("0x957EA0");
-void* FAcalloc(size_t num, size_t size) asm("0x957AB0");
-void* FAmemset(void *dest, int ch, size_t count) asm("0xA89110");
-void* FAmemcpy(void *dest, const void *src, size_t count) asm("0xA89190");
-float FAsqrtf(float arg) asm("0x452FC0");
-size_t FAstrlen(const char *str) asm("0xA94450");
-int FAstrcmp(const char *str1, const char *str2) asm("0xAA549E");
-int FAsprintf_s(char *Buffer, size_t BufferCount, const char *Format, ...) asm("0xA82F32");
+
+void* operator new(size_t) asm("0xA825B9");
+void operator delete(void*, size_t) noexcept asm("0x958C40");
+
+extern "C" {
+void* realloc(void *ptr, size_t new_size) asm("0x957B00");
+void* malloc(size_t size) asm("0x958B20");
+void free(void *ptr) asm("0x958C40");
+size_t msize(void *memblock) asm("0x957EA0");
+void* calloc(size_t num, size_t size) asm("0x957AB0");
+void* memset(void *dest, int ch, size_t count) asm("0xA89110");
+void* memcpy(void *dest, const void *src, size_t count) asm("0xA89190");
+size_t strlen(const char *str) asm("0xA94450");
+int strcmp(const char *str1, const char *str2) asm("0xAA549E");
+int sprintf_s(char *Buffer, size_t BufferCount, const char *Format, ...) asm("0xA82F32");
+float sqrtf(float) asm("0x452FC0");
+}
 
 __thiscall void InitString(void *this_, const char *str) asm("0x405550");
 __thiscall void AssignString(void *this_, const char *str, size_t size) asm("0x4059E0");
