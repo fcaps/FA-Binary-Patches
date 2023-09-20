@@ -399,7 +399,8 @@ void* lua_getglobaluserdata(lua_State*) asm("0x924050");
 void* lua_getstateuserdata(lua_State*) asm("0x9240a0");
 void* lua_tolightuserdata(lua_State*, int) asm("0x90cc10");
 
-int offsetTSizeArray = 32, offsetTSizeNode = 9;
+typedef void GetTableAH_t(void* t, uint32_t *asize, uint8_t *hbits);
+GetTableAH_t *GetTableAH;
 
 typedef void lua_createtable_t(lua_State *L, int narray, int nrec);
 lua_createtable_t *lua_createtable;
