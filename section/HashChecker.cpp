@@ -16,32 +16,20 @@ typedef __stdcall int VirtualProtect_t(void *lpAddress, int dwSize, int flNewPro
 
 #define CloseHandle	WDecl(0xC0F590, __stdcall bool (*)(void* hObject))
 
-#define GENERIC_READ		0x80000000
-#define GENERIC_WRITE		0x40000000
-#define FILE_ATTRIBUTE_NORMAL	0x00000080
-#define FILE_SHARE_READ		1
-#define CREATE_ALWAYS		2
-#define OPEN_EXISTING		3
+#define GENERIC_READ			0x80000000
+#define GENERIC_WRITE			0x40000000
+#define FILE_FLAG_SEQUENTIAL_SCAN	0x08000000
+#define FILE_SHARE_READ			1
+#define CREATE_ALWAYS			2
+#define OPEN_EXISTING			3
 
 int mode = 0;
+int hashIndex;
 void* file = 0;
 VirtualProtect_t *VirtualProtect;
 
 void HashWarn() {
-    WarningF("%s", "Hash not equal");
-}
-
-void HashHook() {
-    register uint64_t* hash1 asm("esi");
-    if (mode == 1) {
-        WriteFile(file, hash1, 16, 0, 0);
-    } else {
-        uint64_t hash2[2];
-        ReadFile(file, hash2, 16, 0, 0);
-        if (hash1[0] != hash2[0] || hash1[1] != hash2[1])
-            HashWarn();
-    }
-    asm("add esp,0x34; pop esi; pop ebp; ret 8;");
+    WarningF("Hash %d not equal", hashIndex);
 }
 
 void HashCheckerStop() {
@@ -67,6 +55,22 @@ void HashCheckerStop() {
     }
 }
 
+void HashHook() {
+    register uint64_t* hash1 asm("esi");
+    if (mode == 1) {
+        WriteFile(file, hash1, 16, 0, 0);
+    } else {
+        uint64_t hash2[2];
+        ReadFile(file, hash2, 16, 0, 0);
+        if (hash1[0] != hash2[0] || hash1[1] != hash2[1]) {
+            HashCheckerStop();
+            HashWarn();
+        }
+        hashIndex++;
+    }
+    asm("add esp,0x34; pop esi; pop ebp; ret 8;");
+}
+
 void SimDestroyHook() {
     HashCheckerStop();
     asm("add esp,0x8; pop ebp; ret 4;");
@@ -75,14 +79,16 @@ void SimDestroyHook() {
 void SimCreateHook() {
     if (mode == 1)
         file = CreateFileA("HashChecker.hash", GENERIC_WRITE,
-            FILE_SHARE_READ, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0); else
+            FILE_SHARE_READ, 0, CREATE_ALWAYS, FILE_FLAG_SEQUENTIAL_SCAN, 0); else
         file = CreateFileA("HashChecker.hash", GENERIC_READ,
-            FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+            FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, 0);
     if (file == -1) {
         WarningF("%s", "CreateFileA error");
         asm("add esp,0x34; pop ebx; pop ebp; jmp 0x7434D0;");
         return;
     }
+    hashIndex = 0;
+
     uint32_t oldProt;
     VirtualProtect((void*)(0x746271), 5, 0x40, &oldProt);
     *(uint8_t*)(0x746271) = 0xE9;
