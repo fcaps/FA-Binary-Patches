@@ -10,6 +10,8 @@ https://github.com/FAForever/FA_Patcher
 ## Signature patches
 - See `SigPatches.txt`
 ## Fixes
+- Allows multiple collisions to be processed during collision checks.
+    - hooks/FixCollisions.cpp
 - Fix `CMauiControl:SetAlpha`: don't change color part and check for 3rd argument as boolean.
     - hooks/SetAlpha.cpp
     - section/SetAlpha.cpp
