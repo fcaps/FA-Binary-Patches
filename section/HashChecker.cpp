@@ -23,13 +23,13 @@ typedef __stdcall int VirtualProtect_t(void *lpAddress, int dwSize, int flNewPro
 #define CREATE_ALWAYS			2
 #define OPEN_EXISTING			3
 
-int mode = 0;
+int hcMode = 0;
 int hashIndex;
-void* file = 0;
+void* hcFile = 0;
 VirtualProtect_t *VirtualProtect;
 
-void HashWarn() {
-    WarningF("Hash %d not equal", hashIndex);
+void HashWarn(uint64_t *data1, uint64_t *data2) {
+    WarningF("Hash %d d1: 0x%X d2: 0x%X not equal", hashIndex, data1, data2);
 }
 
 void HashCheckerStop() {
@@ -48,27 +48,31 @@ void HashCheckerStop() {
     *(uint32_t*)(0x8E5783) = 0xCCCC0008;
     VirtualProtect((void*)(0x8E5782), 5, oldProt, &oldProt);
 
-    if (file) {
-        CloseHandle(file);
+    if (hcFile) {
+        CloseHandle(hcFile);
         WarningF("%s", "HashChecker stop");
-        file = 0;
+        hcFile = 0;
     }
 }
 
 void HashHook() {
     register uint64_t* hash1 asm("esi");
-    if (mode == 1) {
-        WriteFile(file, hash1, 16, 0, 0);
+    uint64_t* data1 = hash1 + 2;
+    if (hcMode == 1) {
+        WriteFile(hcFile, hash1, 16, 0, 0);
+        WriteFile(hcFile, data1, 64, 0, 0);
     } else {
         uint64_t hash2[2];
-        ReadFile(file, hash2, 16, 0, 0);
+        uint64_t data2[8];
+        ReadFile(hcFile, hash2, 16, 0, 0);
+        ReadFile(hcFile, data2, 64, 0, 0);
         if (hash1[0] != hash2[0] || hash1[1] != hash2[1]) {
             HashCheckerStop();
-            HashWarn();
+            HashWarn(data1, data2);
         }
         hashIndex++;
     }
-    asm("add esp,0x34; pop esi; pop ebp; ret 8;");
+    asm("add esp,0x7C; pop ebx; pop esi; pop edi; pop ebp; ret 8;");
 }
 
 void SimDestroyHook() {
@@ -77,12 +81,12 @@ void SimDestroyHook() {
 }
 
 void SimCreateHook() {
-    if (mode == 1)
-        file = CreateFileA("HashChecker.hash", GENERIC_WRITE,
+    if (hcMode == 1)
+        hcFile = CreateFileA("HashChecker.hash", GENERIC_WRITE,
             FILE_SHARE_READ, 0, CREATE_ALWAYS, FILE_FLAG_SEQUENTIAL_SCAN, 0); else
-        file = CreateFileA("HashChecker.hash", GENERIC_READ,
+        hcFile = CreateFileA("HashChecker.hash", GENERIC_READ,
             FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, 0);
-    if (file == -1) {
+    if (hcFile == -1) {
         WarningF("%s", "CreateFileA error");
         asm("add esp,0x34; pop ebx; pop ebp; jmp 0x7434D0;");
         return;
@@ -105,23 +109,23 @@ void SimCreateHook() {
 }
 
 int HashChecker(lua_State *L) {
-    if (file) {
+    if (hcFile) {
         WarningF("%s", "HashChecker already active");
         return 0;
     }
-    mode = luaL_checknumber(L, 1);
+    hcMode = luaL_checknumber(L, 1);
     void *Kernel = GetModuleHandleA("KERNEL32");
     VirtualProtect = GetProcAddress(Kernel, "VirtualProtect");
     HashCheckerStop();
-    if (mode) {
+    if (hcMode) {
         uint32_t oldProt;
         VirtualProtect((void*)(0x7433F4), 4, 0x40, &oldProt);
         *(uint32_t*)(0x7433F4) = &SimCreateHook - 0x7433F3 - 5;
         VirtualProtect((void*)(0x7433F4), 4, oldProt, &oldProt);
-        if (mode == 2)
-            WarningF("Use break point on 0x%X", HashWarn);
+        if (hcMode == 2)
+            WarningF("Use breakpoint at 0x%X", HashWarn);
     }
-    WarningF("Set mode %d", mode);
+    WarningF("Set mode %d", hcMode);
     return 0;
 }
 
