@@ -9,6 +9,12 @@ https://github.com/FAForever/FA_Patcher
 # Change List
 ## Signature patches
 - See `SigPatches.txt`
+## Technical patches
+- Adds `lua_createtable`
+    - section/lua_createtable.cpp
+- Adds registrators for Sim and UI Lua funcs.
+    - hooks/LuaFuncRegs.cpp
+    - section/LuaFuncRegs.cpp
 ## Fixes
 - Allows multiple collisions to be processed during collision checks.
     - hooks/FixCollisions.cpp
@@ -85,8 +91,6 @@ https://github.com/FAForever/FA_Patcher
 - Adds Strategic icon scale support:
     - hooks/IconScale.cpp
     - section/IconScale.cpp
-- Adds `lua_createtable`
-    - section/lua_createtable.cpp
 - Adds new method to `WorldView` (section/WorldView.cpp):
     - `ProjectMultiple` projects multiple vectors at once
 - Adds new methods for `UserUnit` (section/UserUnit.cpp):
@@ -125,9 +129,6 @@ https://github.com/FAForever/FA_Patcher
     - section/MinimapMesh.cpp
 - Allow players to double-click to select Walls
     - hooks/WallSelection.cpp
-- Adds registrators for Sim and UI Lua funcs.
-    - hooks/LuaFuncRegs.cpp
-    - section/LuaFuncRegs.cpp
 - Adds GetTimeForProfile to Sim and UI. Allows to deal with the loss of accuracy
     - section/GetTimeForProfile.cpp
     - section/LuaFuncRegs.cpp
