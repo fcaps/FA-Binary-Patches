@@ -47,18 +47,6 @@ struct vtable
 	void* methods[];
 };
 
-struct string
-{       // 0x1c bytes
-	uint32_t ptr1;
-	char str[0x10]; // DataPtr or used as memory for 'Short Set Optimization'
-	uint32_t strLen;
-	uint32_t size; // 0f if SSO, 1f not SSO
-
-	const char* data() {
-		return size == 0xF ? &str : (const char*)str;
-	}
-};
-VALIDATE_SIZE(string, 0x1C)
 
 template<typename T>
 struct vector
