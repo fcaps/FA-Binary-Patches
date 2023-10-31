@@ -16,8 +16,9 @@ https://github.com/FAForever/FA_Patcher
     - hooks/LuaFuncRegs.cpp
     - section/LuaFuncRegs.cpp
 ## Fixes
+- Projectiles measure unit collision distance properly.
 - Prevent projectile layer changes on terrain collisions.
-- Allow multiple collisions to be processed during collision checks.
+- Allows multiple collisions to be processed during collision checks.
     - hooks/FixCollisions.cpp
 - Fix `CMauiControl:SetAlpha`: don't change color part and check for 3rd argument as boolean.
     - hooks/SetAlpha.cpp

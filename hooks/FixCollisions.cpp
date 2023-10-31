@@ -319,3 +319,12 @@ CONTINUE_FUNCTION: #Moho::Projectile::CheckCollision+0x457
 SKIP_SHIELD_CHECK: #Moho::Projectile::CheckCollision+0x9DB
                      
 )");
+
+asm(R"(
+
+# change the 10% velocity offset for unit collision lines to 0% so the distance
+# is measured properly
+.section h5; .set h5,0x69DA6A #Moho::Projectile::CheckCollision+0x89A
+	movss   xmm7, dword ptr [0xE4F7E0] # zero
+
+)");
