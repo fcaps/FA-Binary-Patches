@@ -2,9 +2,7 @@
 
 This are some binary patches for Supreme Commander Forged Alliance.
 
-To apply them build or get the patcher itself from here
-
-https://github.com/FAForever/FA_Patcher
+To apply the patches you can use the upload action or do it local via the [patcher](https://github.com/FAForever/FA_Patcher)
 
 # Change List
 ## Signature patches
