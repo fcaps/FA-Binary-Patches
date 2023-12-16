@@ -1,0 +1,63 @@
+name: Build EXE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+
+      - name: Install MinGW
+        run: |
+          pacman --noconfirm -S mingw-w64-i686-gcc
+
+      - uses: actions/checkout@v2
+
+      - name: Download Patcher
+        run: curl -L "https://github.com/FAForever/FA_Patcher/releases/latest/download/FaP.exe" -o FaP.exe
+
+      - name: Download Baseline
+        run: curl -L "https://content.faforever.com/build/ForgedAlliance_base.exe" -o ForgedAlliance_base.exe
+
+      - name: Patch Binary
+        run: |
+          echo '#define gitsha "'${GITHUB_SHA::7}'"' > workflow.cpp
+          ./FaP.exe
+
+      - name: Get Branch Name
+        id: branch
+        run: echo "::set-output name=branch::${GITHUB_REF/refs\/heads\//}"
+
+      - name: Get Short Commit SHA
+        id: commit_sha
+        run: echo "::set-output name=commit_sha::$(echo ${GITHUB_SHA::8})"
+
+      - name: Release
+        id: release
+        uses: actions/create-release@v1
+        with:
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release_name: ${{ steps.branch.outputs.branch }}-${{ github.run_id }}
+          tag_name: ${{ steps.branch.outputs.branch }}-${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Upload game file
+        id: upload-exe
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ForgedAlliance_exxt.exe
+          asset_name: ForgedAlliance.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
